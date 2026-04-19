@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Alerts Dashboard</title>
+</head>
+<body>
+  <header class="navbar">
+    <nav>
+      <a href="#">Community</a>
+      <a href="#">Inventory</a>
+      <a href="#">Insights</a>
+    </nav>
+    <div class="profile" aria-label="User profile">👤</div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>Alerts & Notifications</h1>
+        <p class="sub">Stay informed about your herd’s security, health, and system status.</p>
+      </div>
+      <button id="markAll" type="button">Mark all as read</button>
+    </section>
+
+    <div class="status-row">
+      <div class="counter" id="counter"></div>
+      <div class="badge" id="unreadBadge"></div>
+    </div>
+
+    <div class="tabs" role="tablist" aria-label="Alert filters">
+      <button class="tab active" data-type="all" role="tab" aria-selected="true">All</button>
+      <button class="tab" data-type="danger" role="tab" aria-selected="false">Security</button>
+      <button class="tab" data-type="warning" role="tab" aria-selected="false">Health</button>
+      <button class="tab" data-type="info" role="tab" aria-selected="false">System</button>
+    </div>
+
+    <section id="alertsList" class="alerts" aria-live="polite"></section>
+
+    <footer class="site-footer" aria-label="Footer information">
+      <div class="footer-grid">
+        <div>
+          <h2>FarmLife</h2>
+          <p>FarmLife brings you modern herd monitoring, insights, and support designed for sustainable agribusiness.</p>
+        </div>
+
+        <div>
+          <h3>Platforms</h3>
+          <ul>
+            <li><a href="#">Web Dashboard</a></li>
+            <li><a href="#">Mobile App</a></li>
+            <li><a href="#">Farmer Portal</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Support</h3>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Contact Support</a></li>
+            <li><a href="#">Product Updates</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+            <li><a href="#">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
