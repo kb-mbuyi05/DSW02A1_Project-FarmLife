@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FarmLife - Inventory & Sales</title>
+  <link rel="stylesheet" href="inventory-sales.css">
+  <script src="inventory-sales.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!--Header section with navigation bar-->
+  <header>
+    <div class="logo">FarmLife</div>
+    <nav>
+      <ul>
+        <li><a href="homepage.html" target="_blank">Home</a></li>
+        <li><a href="dashboard.html" target="_blank">Dashboard</a></li>
+        <li><a href="animals.html" target="_blank">Animals</a></li>
+        <li><a href="community.html" target="_blank">Community</a></li>
+        <li><a href="alerts.html" target="_blank">Alerts</a></li>
+        <li><a href="insights-analytics.html" target="_blank">Insights & Analytics</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!---->
+  <main class="inventory-page">
+    <section class="metrics">
+      <div class="metric">Total Herd Population: 468 Animals <span class="trend up">+4.2%</span></div>
+      <div class="metric">Estimated Market Value: R 8.42M <span class="trend up">+12.5%</span></div>
+      <div class="metric">Monthly Revenue: R 72,000 <span class="trend down">-8.1%</span></div>
+      <div class="metric">Sales Target Progress: 82% <span class="trend up">+2.4%</span></div>
+    </section>
+
+  <!---->
+    <section class="charts">
+      <div class="chart-box">
+        <h2>Herd Growth & Sales Trends</h2>
+        <canvas id="growthSalesChart"></canvas>
+      </div>
+      <div class="chart-box">
+        <h2>Monthly Revenue Flux</h2>
+        <canvas id="revenueChart"></canvas>
+      </div>
+    </section>
+
+    <!---->
+    <section class="ledger">
+      <h2>Recent Sales Ledger</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Animal/Tag</th><th>Buyer</th><th>Date</th><th>Amount</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Brahman Bull (ZV-4402)</td><td>Green Valley Meats</td><td>2024-05-12</td><td>R 18,500</td><td>Completed</td></tr>
+          <tr><td>Merino Ewe (x5) (ZV-9192)</td><td>Kruger Livestock</td><td>2024-05-10</td><td>R 12,400</td><td>Completed</td></tr>
+          <tr><td>Angus Calf (ZV-2914)</td><td>Private Sale: D. Smith</td><td>2024-05-08</td><td>R 8,200</td><td>Completed</td></tr>
+          <tr><td>Boer Goat (ZV-5001)</td><td>Local Auction House</td><td>2024-05-05</td><td>R 4,500</td><td>Processing</td></tr>
+          <tr><td>Brahman Heifer (ZV-4418)</td><td>Highland Farms</td><td>2024-05-01</td><td>R 15,200</td><td>Completed</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!---->
+    <section class="quick-sale">
+      <h2>Quick Sale Entry</h2>
+      <form id="saleForm">
+        <input type="text" placeholder="Animal Tag ID" required>
+        <input type="number" placeholder="Sale Price (R)" required>
+        <input type="date" required>
+        <input type="text" placeholder="Buyer Name/Entity" required>
+        <button type="submit">Complete Sale Entry</button>
+      </form>
+    </section>
+
+    <section class="market-insights">
+      <h2>Market Insights</h2>
+      <p>Beef prices are projected to rise by 4.5% next month. Consider delaying non-urgent bull sales. Explore Predictive Analytics.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-columns">
+      <div>
+        <h3>Platform</h3>
+        <p>Tracking | Profiles | Reports</p>
+      </div>
+      <div>
+        <h3>Support</h3>
+        <p>Offline Mode | Settings | Help Center</p>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Use</a></p>
+      </div>
+    </div>
+    <p>&copy; 2026 FarmLife. All rights reserved.</p>
+  </footer>
+</body>
+</html>
