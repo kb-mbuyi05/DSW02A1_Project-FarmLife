@@ -1,0 +1,43 @@
+header{
+  background: #2c3e50;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+nav ul{
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: #34495e;
+  padding: 10px;
+  margin: 0;
+}
+
+nav ul li a{
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav ul li a:hover{
+  text-decoration: underline;
+}
+
+#map{
+  background: #e0f7fa;
+  height: 380px;
+  position: relative;
+  margin: 20px;
+}
+
+.marker{
+  position: absolute;
+  top: 50px;
+  left: 100px;
+  background: #ff5722;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+}

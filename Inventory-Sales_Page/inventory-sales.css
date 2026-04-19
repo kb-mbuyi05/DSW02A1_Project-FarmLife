@@ -1,0 +1,145 @@
+body{ 
+  font-family: Arial, sans-serif; 
+  margin:0; 
+  padding:0; 
+}
+
+header{ 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  background:#2c3e50; 
+  color:white; 
+  padding:10px 20px; 
+}
+
+header .logo{ 
+  font-size:1.5em; 
+  font-weight:bold; 
+}
+
+nav ul{ 
+  list-style:none; 
+  display:flex; 
+  gap:20px; 
+  margin:0; 
+  padding:0; 
+}
+
+nav ul li a{ 
+  color:white; 
+  text-decoration:none; 
+  font-weight:bold; 
+}
+
+nav ul li a.active{ 
+  color:#f39c12; 
+}
+
+.inventory-page{ 
+  padding:20px; 
+}
+
+.metrics{ 
+  display:flex; 
+  gap:20px;
+  margin-bottom:20px; 
+}
+
+.metric{ 
+  background:#ecf0f1; 
+  padding:15px; 
+  border-radius:8px; 
+  flex:1; 
+  font-weight:bold; 
+}
+
+.trend.up{ 
+  color:green; 
+  margin-left:10px; 
+}
+
+.trend.down{ 
+  color:red; 
+  margin-left:10px; 
+}
+
+.charts{ 
+  display:flex; 
+  gap:20px; 
+  margin-bottom:30px;
+}
+
+.chart-box{ 
+  flex:1; 
+  background:#f9f9f9; 
+  padding:20px; 
+  border-radius:8px; 
+}
+
+.ledger table{ 
+  width:100%; 
+  border-collapse:collapse; 
+  margin-bottom:20px; 
+}
+
+.ledger th, .ledger td{ 
+  border:1px solid #ddd; 
+  padding:8px; 
+  text-align:left; 
+}
+
+.ledger th{ 
+  background:#34495e; 
+  color:white;
+}
+
+.quick-sale form{ 
+  display:flex; 
+  flex-direction:column; 
+  gap:10px; 
+  max-width:400px; 
+}
+
+.quick-sale input, .quick-sale button{ 
+  padding:10px; 
+  border:1px solid #ccc; 
+  border-radius:5px; 
+}
+
+.quick-sale button{ 
+  background:#2c3e50; 
+  color:white; 
+  cursor:pointer; 
+}
+
+.quick-sale button:hover{ 
+  background:#1a252f; 
+}
+
+.market-insights{ 
+  background:#fff3e0; 
+  padding:15px; 
+  border-radius:8px; 
+  margin-top:20px; 
+}
+
+footer{ background:#34495e; 
+  color:white; 
+  padding:20px; 
+}
+
+.footer-columns{ 
+  display:flex; 
+  justify-content:space-around; 
+  margin-bottom:10px; 
+}
+
+footer a{ 
+  color:white; 
+  text-decoration:none; 
+}
+
+footer a:hover{
+  text-decoration:underline;
+}
