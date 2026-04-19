@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FarmLife - Insights & Analytics</title>
+  <link rel="stylesheet" href="insights-analytics.css">
+  <script src="insights-analytics.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <!--Header section with navigation bar-->
+  <header>
+    <div class="logo">FarmLife</div>
+    <nav>
+      <ul>
+        <li><a href="homepage.html" target="_blank">Home</a></li>
+        <li><a href="dashboard.html" target="_blank">Dashboard</a></li>
+        <li><a href="animals.html" target="_blank">Animals</a></li>
+        <li><a href="community.html" target="_blank">Community</a></li>
+        <li><a href="alerts.html" target="_blank">Alerts</a></li>
+        <li><a href="inventory-sales.html" target="_blank">Inventory & Sales</a></li>
+        </ul>
+    </nav>
+  </header>
+  
+  <!--Main content area for insights and analytics-->
+  <main class="insights-page">
+    <section class="metrics">
+      <div class="metric">Total Livestock: 482 <span class="trend up">+12.5%</span></div>
+      <div class="metric">Health Index: 94.2% <span class="trend down">-0.8%</span></div>
+      <div class="metric">Security Status: Elevated (Watch)</div>
+      <div class="metric">Predicted Yield: ZAR 1.2M <span class="trend up">+5.2%</span></div>
+    </section>
+  
+  <!--Forecast Section-->
+    <section class="forecast">
+      <h2>Breeding & Growth Forecast</h2>
+      <canvas id="growthChart"></canvas>
+      <p class="insight-note">Insight: Optimal Window Detected — March shows a 12% efficiency rating. We recommend staggering vaccinations in late February to ensure peak health during the April growth spurt.</p>
+    </section>
+
+  <!--Health Flags Section-->
+    <section class="health-flags">
+      <h2>Health Flags</h2>
+      <ul>
+        <li>AN-8821 (Brahman) — Weight Loss</li>
+        <li>AN-7704 (Nguni) — Lethargy</li>
+        <li>AN-6012 (Angus) — Restless</li>
+        <li>AN-6815 (Brahman) — Heart Rate</li>
+      </ul>
+      <p><strong>General Movement:</strong> Normal</p>
+      <p><strong>Feeding Patterns:</strong> Minor Fluctuation</p>
+    </section>
+
+  <!--Theft Risk Section-->
+    <section class="theft-section">
+      <div class="heatmap">
+        <h2>Theft Hotspot Heatmap</h2>
+        <div class="map-placeholder">[Heatmap Placeholder]</div>
+        <button>View Incident Details</button>
+      </div>
+      <div class="zone-risk">
+        <h2>Zone Risk Levels</h2>
+        <ul>
+          <li>Sector A: 85% (8 recent incidents)</li>
+          <li>Sector B: 30% (3 recent incidents)</li>
+          <li>Sector C: 95% (9 recent incidents)</li>
+          <li>Sector D: 15% (1 recent incident)</li>
+        </ul>
+        <button>Review Community Reports</button>
+      </div>
+    </section>
+  
+  <!--Security Trend Section-->
+    <section class="security-trend">
+      <h2>Regional Security Trend</h2>
+      <canvas id="securityChart"></canvas>
+    </section>
+  </main>
+
+  <!--Footer Section-->
+  <footer>
+    <div class="footer-columns">
+      <div>
+        <h3>FarmLife</h3>
+        <p>Protecting South African livestock and empowering the farming community through technology and collaboration.</p>
+      </div>
+      <div>
+        <h3>Platform</h3>
+        <p>Tracking | Profiles | Reports</p>
+      </div>
+      <div>
+        <h3>Support</h3>
+        <p>Offline Mode | Settings | Help Center</p>
+      </div>
+      <div>
+        <h3>Legal</h3>
+        <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Use</a></p>
+      </div>
+    </div>
+    <p>&copy; 2026 FarmLife. All rights reserved.</p>
+  </footer>
+
+  </body>
+</html>
