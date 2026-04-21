@@ -2,98 +2,225 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FarmLife - Inventory & Sales</title>
   <link rel="stylesheet" href="inventory-sales.css">
   <script src="inventory-sales.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <!--Header section with navigation bar-->
-  <header>
-    <div class="logo">FarmLife</div>
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo">FarmLife</div>
+      <div class="brand-subtitle">Livestock inventory and sales management</div>
+    </div>
     <nav>
       <ul>
-        <li><a href="homepage.html" target="_blank">Home</a></li>
-        <li><a href="dashboard.html" target="_blank">Dashboard</a></li>
-        <li><a href="animals.html" target="_blank">Animals</a></li>
-        <li><a href="community.html" target="_blank">Community</a></li>
-        <li><a href="alerts.html" target="_blank">Alerts</a></li>
-        <li><a href="insights-analytics.html" target="_blank">Insights & Analytics</a></li>
+        <li><a href="../Homepage/homepage.html">Home</a></li>
+        <li><a href="../Dashboard_Page/dashboard.html">Dashboard</a></li>
+        <li><a href="../AnimalProfiles_Page/animal-profiles.html">Animals</a></li>
+        <li><a href="../Community-Reports_Page/community.html">Community</a></li>
+        <li><a href="../notifications.HTML">Alerts</a></li>
+        <li><a href="inventory-sales.html" class="active">Inventory & Sales</a></li>
+        <li><a href="../Insights-Analytics_Page/insights-analytics.html">Insights & Analytics</a></li>
       </ul>
     </nav>
   </header>
 
-  <!---->
-  <main class="inventory-page">
-    <section class="metrics">
-      <div class="metric">Total Herd Population: 468 Animals <span class="trend up">+4.2%</span></div>
-      <div class="metric">Estimated Market Value: R 8.42M <span class="trend up">+12.5%</span></div>
-      <div class="metric">Monthly Revenue: R 72,000 <span class="trend down">-8.1%</span></div>
-      <div class="metric">Sales Target Progress: 82% <span class="trend up">+2.4%</span></div>
-    </section>
-
-  <!---->
-    <section class="charts">
-      <div class="chart-box">
-        <h2>Herd Growth & Sales Trends</h2>
-        <canvas id="growthSalesChart"></canvas>
+  <main class="inventory-container">
+    <section class="page-header">
+      <div>
+        <h1>Inventory & Sales Management</h1>
+        <p>Track herd valuations, sales transactions, and market trends in real-time.</p>
       </div>
-      <div class="chart-box">
-        <h2>Monthly Revenue Flux</h2>
-        <canvas id="revenueChart"></canvas>
+      <div class="header-actions">
+        <button type="button" class="secondary-btn">Export Ledger</button>
       </div>
     </section>
 
-    <!---->
-    <section class="ledger">
-      <h2>Recent Sales Ledger</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Animal/Tag</th><th>Buyer</th><th>Date</th><th>Amount</th><th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Brahman Bull (ZV-4402)</td><td>Green Valley Meats</td><td>2024-05-12</td><td>R 18,500</td><td>Completed</td></tr>
-          <tr><td>Merino Ewe (x5) (ZV-9192)</td><td>Kruger Livestock</td><td>2024-05-10</td><td>R 12,400</td><td>Completed</td></tr>
-          <tr><td>Angus Calf (ZV-2914)</td><td>Private Sale: D. Smith</td><td>2024-05-08</td><td>R 8,200</td><td>Completed</td></tr>
-          <tr><td>Boer Goat (ZV-5001)</td><td>Local Auction House</td><td>2024-05-05</td><td>R 4,500</td><td>Processing</td></tr>
-          <tr><td>Brahman Heifer (ZV-4418)</td><td>Highland Farms</td><td>2024-05-01</td><td>R 15,200</td><td>Completed</td></tr>
-        </tbody>
-      </table>
+    <section class="metrics-grid">
+      <article class="metric-card">
+        <span class="metric-label">Total Herd Population</span>
+        <strong class="metric-value">468</strong>
+        <span class="metric-trend up">+4.2% this year</span>
+      </article>
+      <article class="metric-card">
+        <span class="metric-label">Market Value</span>
+        <strong class="metric-value">R 8.42M</strong>
+        <span class="metric-trend up">+12.5% growth</span>
+      </article>
+      <article class="metric-card">
+        <span class="metric-label">Monthly Revenue</span>
+        <strong class="metric-value">R 72,000</strong>
+        <span class="metric-trend down">-8.1% from target</span>
+      </article>
+      <article class="metric-card">
+        <span class="metric-label">Sales Target Progress</span>
+        <strong class="metric-value">82%</strong>
+        <span class="metric-trend up">+2.4% on track</span>
+      </article>
     </section>
 
-    <!---->
-    <section class="quick-sale">
-      <h2>Quick Sale Entry</h2>
-      <form id="saleForm">
-        <input type="text" placeholder="Animal Tag ID" required>
-        <input type="number" placeholder="Sale Price (R)" required>
-        <input type="date" required>
-        <input type="text" placeholder="Buyer Name/Entity" required>
-        <button type="submit">Complete Sale Entry</button>
-      </form>
+    <div class="analytics-grid">
+      <section class="panel chart-panel">
+        <div class="panel-header">
+          <h2>Herd Growth & Sales Trends</h2>
+          <span class="badge info">6 Months</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="growthSalesChart" height="300"></canvas>
+        </div>
+      </section>
+
+      <section class="panel chart-panel">
+        <div class="panel-header">
+          <h2>Monthly Revenue Flux</h2>
+          <span class="badge success">Trending</span>
+        </div>
+        <div class="chart-wrapper">
+          <canvas id="revenueChart" height="300"></canvas>
+        </div>
+      </section>
+    </div>
+
+    <section class="panel ledger-panel">
+      <div class="panel-header">
+        <h2>Recent Sales Ledger</h2>
+        <span class="badge primary">5 Recent</span>
+      </div>
+      <div class="table-wrapper">
+        <table class="sales-table">
+          <thead>
+            <tr>
+              <th>Animal / Tag</th>
+              <th>Buyer</th>
+              <th>Date</th>
+              <th>Amount</th>
+              
+              
+              
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-id="zv4402">
+              <td><strong>Brahman Bull (ZV-4402)</strong></td>
+              <td>Green Valley Meats</td>
+              <td>2024-05-12</td>
+              <td><strong>R 18,500</strong></td>
+              <td><span class="status-badge completed">Completed</span></td>
+             
+                
+              </td>
+            </tr>
+            <tr data-id="zv9192">
+              <td><strong>Merino Ewe x5 (ZV-9192)</strong></td>
+              <td>Kruger Livestock</td>
+              <td>2024-05-10</td>
+              <td><strong>R 12,400</strong></td>
+              <td><span class="status-badge completed">Completed</span></td>
+
+              </td>
+            </tr>
+            <tr>
+              <td><strong>Angus Calf (ZV-2914)</strong></td>
+              <td>Private Sale: D. Smith</td>
+              <td>2024-05-08</td>
+              <td><strong>R 8,200</strong></td>
+              <td><span class="status-badge completed">Completed</span></td>
+            </tr>
+            <tr>
+              <td><strong>Boer Goat (ZV-5001)</strong></td>
+              <td>Local Auction House</td>
+              <td>2024-05-05</td>
+              <td><strong>R 4,500</strong></td>
+              <td><span class="status-badge processing">Processing</span></td>
+            </tr>
+            <tr>
+              <td><strong>Brahman Heifer (ZV-4418)</strong></td>
+              <td>Highland Farms</td>
+              <td>2024-05-01</td>
+              <td><strong>R 15,200</strong></td>
+              <td><span class="status-badge completed">Completed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </section>
 
-    <section class="market-insights">
-      <h2>Market Insights</h2>
-      <p>Beef prices are projected to rise by 4.5% next month. Consider delaying non-urgent bull sales. Explore Predictive Analytics.</p>
-    </section>
+    <div class="form-grid">
+      <section class="panel sale-form-panel">
+        <div class="panel-header">
+          <h2>Quick Sale Entry</h2>
+        </div>
+        <form id="saleForm" class="sale-form">
+          <div class="form-group">
+            <label for="tagId">Animal Tag ID</label>
+            <input type="text" id="tagId" placeholder="e.g., ZV-4418" required>
+          </div>
+
+          <div class="form-group">
+            <label for="salePrice">Sale Price (R)</label>
+            <input type="number" id="salePrice" placeholder="15200" required>
+          </div>
+
+          <div class="form-group">
+            <label for="saleDate">Sale Date</label>
+            <input type="date" id="saleDate" required>
+          </div>
+
+          <div class="form-group">
+            <label for="buyerName">Buyer Name / Entity</label>
+            <input type="text" id="buyerName" placeholder="e.g., Highland Farms" required>
+          </div>
+
+          <button type="submit" class="primary-btn">Complete Sale Entry</button>
+        </form>
+      </section>
+
+      <section class="panel insight-panel">
+        <div class="panel-header">
+          <h2>Market Insights</h2>
+        </div>
+        <div class="insight-box">
+          <strong>Market Outlook: Bullish on Beef</strong>
+          <p>Beef prices are projected to rise by 4.5% next month. Consider delaying non-urgent bull sales to maximize returns. Explore <a href="../Insights-Analytics_Page/insights-analytics.html">Predictive Analytics</a> for detailed forecasts.</p>
+        </div>
+        <div class="insight-box secondary">
+          <strong>Inventory Recommendation</strong>
+          <p>Current market conditions favor breeding herd expansion. Heifer prices remain favorable for long-term investment positioning.</p>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <footer>
-    <div class="footer-columns">
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div>
+        <h3>FarmLife</h3>
+        <p>Protecting South African livestock and empowering the farming community through technology and collaboration.</p>
+      </div>
       <div>
         <h3>Platform</h3>
-        <p>Tracking | Profiles | Reports</p>
+        <ul>
+          <li><a href="#">Tracking</a></li>
+          <li><a href="#">Profiles</a></li>
+          <li><a href="#">Reports</a></li>
+        </ul>
       </div>
       <div>
         <h3>Support</h3>
-        <p>Offline Mode | Settings | Help Center</p>
+        <ul>
+          <li><a href="#">Offline Mode</a></li>
+          <li><a href="#">Settings</a></li>
+          <li><a href="#">Help Center</a></li>
+        </ul>
       </div>
       <div>
         <h3>Legal</h3>
-        <p><a href="privacy.html">Privacy Policy</a> | <a href="terms.html">Terms of Use</a></p>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Use</a></li>
+        </ul>
       </div>
     </div>
     <p>&copy; 2026 FarmLife. All rights reserved.</p>

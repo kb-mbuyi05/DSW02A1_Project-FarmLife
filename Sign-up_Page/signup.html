@@ -13,13 +13,13 @@
     <div class="logo">FarmLife</div>
     <nav>
       <ul>
-        <li><a href="homepage.html" target="_blank">Home</a></li>
-        <li><a href="dashboard.html" target="_blank">Dashboard</a></li>
-        <li><a href="animals.html" target="_blank">Animals</a></li>
-        <li><a href="community.html" target="_blank">Community</a></li>
-        <li><a href="alerts.html" target="_blank">Alerts</a></li>
-        <li><a href="inventory-sales.html" target="_blank">Inventory & Sales</a></li>
-        <li><a href="insights-analytics.html" target="_blank">Insights & Analytics</a></li>
+        <li><a href="../Homepage/homepage.html">Home</a></li>
+        <li><a href="../Dashboard_Page/dashboard.html">Dashboard</a></li>
+        <li><a href="../AnimalProfiles_Page/animal-profiles.html">Animals</a></li>
+        <li><a href="../Community-Reports_Page/community.html">Community</a></li>
+        <li><a href="../notifications.HTML">Alerts</a></li>
+        <li><a href="../Inventory-Sales_Page/inventory-sales.html">Inventory & Sales</a></li>
+        <li><a href="../Insights-Analytics_Page/insights-analytics.html">Insights & Analytics</a></li>
       </ul>
     </nav>
   </header>
@@ -29,17 +29,24 @@
     <h2>Create Your Account</h2>
     <p>Join thousands of South African farmers protecting their herds with FarmLife</p>
     <form action="" id="signupForm">
-      <input type="text" id="name" placeholder="Full Name" required>
-      <input type="text" id="email" placeholder="Email Address" required>
-      <input type="text" id="password" placeholder="Password" required>
-      <input type="text" id="confirmPassword" placeholder="Confirm Password" required>
+      <label for="name">Full Name</label>
+      <input type="text" id="name" required>
+
+      <label for="email">Email</label>
+      <input type="email" id="email" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" required>
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" required>
 
       <button type="submit">Sign Up</button>
     </form>
 
     <!--Login and forgot password links-->
-    <p>Already have an account?<a href="login.html">Log in</a></p>
-    <p>Forgot your password?<a href="forgot-password.html">Forgot Password</a></p>
+    <p>Already have an account?<a href="../Log-in_Page/login.html">Log in</a></p>
+    <p>Forgot your password?<a href="../Forgot-Password_Page/forgot-password.html">Forgot Password</a></p>
   </main>
 
   <footer><p>&copy; 2026 FarmLife. All rights reserved.</p></footer>

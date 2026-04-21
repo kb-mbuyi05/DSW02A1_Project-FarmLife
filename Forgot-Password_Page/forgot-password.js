@@ -1,17 +1,28 @@
-// Handles the forgot password form submission
-document.getElementById("forgotForm").addEventListener("submit", function(e) {
-  e.preventDefault();
-  const email = document.getElementById("email").value.trim();
+function setActiveNavLink() {
+  const currentPage = window.location.pathname.split('/').pop();
+  document.querySelectorAll('nav a').forEach(link => {
+    const href = link.getAttribute('href');
+    if (!href) return;
+    const linkPage = href.split('/').pop();
+    if (linkPage === currentPage) {
+      link.classList.add('active');
+    }
+  });
+}
 
-  //Basic validation to check if email is entered
-  if (!email) {
-    alert("Please enter your email address.");
-    return;
-  }
+document.addEventListener('DOMContentLoaded', function() {
+  setActiveNavLink();
 
-  //Simulated reset link
-  alert(`A password reset link has been sent to ${email}.`);
+  document.getElementById('forgotForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = document.getElementById('email').value.trim();
 
-  //Redirects back to login page after sending
-  window.location.href = "login.html";
-})
+    if (!email) {
+      alert('Please enter your email address.');
+      return;
+    }
+
+    alert(`A password reset link has been sent to ${email}.`);
+    window.location.href = 'login.html';
+  });
+});

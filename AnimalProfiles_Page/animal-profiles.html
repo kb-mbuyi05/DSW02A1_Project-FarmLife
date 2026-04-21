@@ -7,59 +7,116 @@
   <script src="animal-profiles.js" defer></script>
 </head>
 <body>
-  <header>
-    <div class="logo">FarmLife</div>
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo">FarmLife</div>
+      <div class="brand-subtitle">Smart livestock intelligence for modern farms</div>
+    </div>
     <nav>
       <ul>
-        <li><a href="homepage.html" target="_blank">Home</a></li>
-        <li><a href="animals.html" target="_blank" class="active">Animal</a></li>
-        <li><a href="community.html" target="_blank">Community</a></li>
-        <li><a href="alerts.html" target="_blank">Alerts</a></li>
-        <li><a href="inventory-sales.html" target="_blank">Inventory & Sales</a></li>
-        <li><a href="insights-analytics.html" target="_blank">Insights & Analytics</a></li>
+        <li><a href="../Homepage/homepage.html">Home</a></li>
+        <li><a href="animal-profiles.html" class="active">Animals</a></li>
+        <li><a href="../Community-Reports_Page/community.html">Community</a></li>
+        <li><a href="../notifications.HTML">Alerts</a></li>
+        <li><a href="../Inventory-Sales_Page/inventory-sales.html">Inventory & Sales</a></li>
+        <li><a href="../Insights-Analytics_Page/insights-analytics.html">Insights & Analytics</a></li>
       </ul>
     </nav>
   </header>
 
-  <main class="dashboard">
-    <aside class="sidebar">
-      <h3>Animal List</h3>
-      <ul>
-        <li class="active">Bessie (SA-442-90) <span class="status healthy">Healthy</span></li>
-        <li>Duke (SA-612-90) <span class="status sick">Sick</span></li>
-        <li>Shadow (SA-442-91) <span class="status healthy">Healthy</span></li>
-        <li>Bella (SA-939-32) <span class="status normal">Normal</span></li>
+  <main class="animal-grid">
+    <aside class="sidebar-panel">
+      <div class="panel-header">
+        <h3>Animal Profiles</h3>
+        <p>Filter, select and review herd status with precision.</p>
+      </div>
+      <div class="search-wrap">
+        <input id="searchAnimal" type="search" placeholder="Search animals..." aria-label="Search animals">
+      </div>
+      <ul class="animal-list" id="animalList">
+        <li data-id="bessie" class="active"><span>Bessie</span><span class="status healthy">Healthy</span></li>
+        <li data-id="duke"><span>Duke</span><span class="status sick">Sick</span></li>
+        <li data-id="shadow"><span>Shadow</span><span class="status healthy">Healthy</span></li>
+        <li data-id="bella"><span>Bella</span><span class="status normal">Normal</span></li>
       </ul>
     </aside>
 
-    <section class="profile">
-      <h2>Bessie — SA-442-90</h2>
-      <img src="images/bessie.jpg" alt="Brahman cow">
-      <div class="details">
-        <p><strong>Electronic Tag ID:</strong> SA-442-90</p>
-        <p><strong>Breed Type:</strong> Brahman</p>
-        <p><strong>Date of Birth:</strong> 2021-03-12</p>
-        <p><strong>Target Weight (kg):</strong> 750</p>
-        <p><strong>Last Recorded Weight:</strong> 520 kg</p>
-        <p><strong>Next Vaccination:</strong> 14 Days</p>
-        <p><strong>Status Level:</strong> Normal</p>
+    <section class="profile-panel">
+      <div class="profile-hero">
+        <div class="profile-copy">
+          <div class="profile-title">
+            <h1 id="profileName">Bessie</h1>
+            <span id="profileStatus" class="pill healthy">Healthy</span>
+          </div>
+          <p id="profileTag">Brahman cow · Tag SA-442-90 · Next vaccine due in 14 days</p>
+        </div>
+        <div class="profile-avatar">
+          <img id="profileImage" src="images/bessie.jpg" alt="Bessie profile">
+        </div>
       </div>
 
-      <div class="notes">
-        <h3>Internal Management Notes</h3>
-        <textarea placeholder="e.g. Docile temperament, prefers the eastern grazing paddock..."></textarea>
+      <div class="metric-grid">
+        <article class="metric-card">
+          <span class="metric-title">Last Recorded Weight</span>
+          <strong id="weightValue">520 kg</strong>
+        </article>
+        <article class="metric-card">
+          <span class="metric-title">Health Score</span>
+          <strong id="healthScore">94%</strong>
+        </article>
+        <article class="metric-card">
+          <span class="metric-title">Location</span>
+          <strong id="locationValue">North Pasture</strong>
+        </article>
+        <article class="metric-card">
+          <span class="metric-title">Next Check-up</span>
+          <strong id="nextCheckup">14 days</strong>
+        </article>
       </div>
 
-      <div class="tabs">
-        <button class="tab active">General Information</button>
-        <button class="tab">Medical History</button>
-        <button class="tab">Ownership & Provenance</button>
+      <div class="profile-body">
+        <div class="profile-card">
+          <h2>Profile details</h2>
+          <ul class="profile-details" id="profileDetails">
+            <li><strong>Tag ID:</strong> SA-442-90</li>
+            <li><strong>Breed Type:</strong> Brahman</li>
+            <li><strong>Date of Birth:</strong> 2021-03-12</li>
+            <li><strong>Target Weight:</strong> 750 kg</li>
+            <li><strong>Latest Activity:</strong> Grazing at East fence</li>
+          </ul>
+        </div>
+
+        <div class="profile-card notes-card">
+          <div class="card-header">
+            <h2>Management notes</h2>
+            <span class="note-badge">Restricted</span>
+          </div>
+          <textarea id="notesArea" readonly>Docile temperament. Monitor feed intake with higher grain ratio during the next two weeks.</textarea>
+        </div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab active" type="button" data-tab="general">General Information</button>
+        <button class="tab" type="button" data-tab="medical">Medical History</button>
+        <button class="tab" type="button" data-tab="ownership">Ownership & Provenance</button>
+      </div>
+
+      <div class="tab-content" id="tabContent">
+        <h2>General Information</h2>
+        <p>Tagged on 2021-03-12. Bessie is monitored via GPS collar and scheduled for a vaccination refresh in two weeks.</p>
+        <ul>
+          <li><strong>Current pasture:</strong> North Pasture</li>
+          <li><strong>Daily feed plan:</strong> Mixed roughage + energy supplement</li>
+          <li><strong>Tracking status:</strong> Live</li>
+        </ul>
       </div>
     </section>
   </main>
 
-  <footer>
-    <p>FarmLife — Protecting South African livestock and empowering the farming community through technology and collaboration.</p>
+  <footer class="site-footer">
+    <div>
+      <p>FarmLife — Protecting South African livestock and empowering the farming community through technology and collaboration.</p>
+    </div>
     <p>&copy; 2026 FarmLife. All rights reserved.</p>
   </footer>
 

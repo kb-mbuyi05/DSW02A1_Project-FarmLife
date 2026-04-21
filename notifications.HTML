@@ -9,9 +9,9 @@
 <body>
   <header class="navbar">
     <nav>
-      <a href="#">Community</a>
-      <a href="#">Inventory</a>
-      <a href="#">Insights</a>
+      <a href="Community-Reports_Page/community.html">Community</a>
+      <a href="Inventory-Sales_Page/inventory-sales.html">Inventory</a>
+      <a href="Insights-Analytics_Page/insights-analytics.html">Insights</a>
     </nav>
     <div class="profile" aria-label="User profile">👤</div>
   </header>
@@ -38,6 +38,14 @@
     </div>
 
     <section id="alertsList" class="alerts" aria-live="polite"></section>
+
+    <div id="detailsModal" class="modal" aria-hidden="true">
+      <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="detailsTitle">
+        <button id="closeModal" class="close-modal" aria-label="Close details">×</button>
+        <h2 id="detailsTitle">Notification Details</h2>
+        <div id="detailsBody" class="details-body"></div>
+      </div>
+    </div>
 
     <footer class="site-footer" aria-label="Footer information">
       <div class="footer-grid">

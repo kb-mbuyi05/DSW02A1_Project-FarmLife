@@ -16,6 +16,37 @@ const alerts = [
   { id: 3, type: 'info', title: 'Vaccination Due', desc: '3 cattle scheduled for vaccination', time: '2 hours ago', read: false }
 ];
 
+function addPendingReportAlert() {
+  const storedReport = localStorage.getItem('pendingReportAlert');
+  if (!storedReport) return;
+
+  try {
+    const report = JSON.parse(storedReport);
+    if (!report || !report.farmerName || !report.animalType || !report.location) {
+      localStorage.removeItem('pendingReportAlert');
+      return;
+    }
+
+    const nextId = alerts.reduce((maxId, alert) => Math.max(maxId, alert.id), 0) + 1;
+    const type = 'danger';
+    const title = `Theft report from ${report.farmerName}`;
+    const desc = `${report.quantity} ${report.animalType} reported stolen at ${report.location}. Status: ${report.status}. ${report.description}`;
+
+    alerts.unshift({
+      id: nextId,
+      type,
+      title,
+      desc,
+      time: 'Just now',
+      read: false
+    });
+  } catch (error) {
+    console.error('Unable to parse stored report alert:', error);
+  }
+
+  localStorage.removeItem('pendingReportAlert');
+}
+
 function countUnread() {
   return alerts.filter(alert => !alert.read).length;
 }
@@ -52,7 +83,10 @@ function renderAlerts(filter = 'all') {
         <span class="time">${alert.time}</span>
       </div>
       <p>${alert.desc}</p>
-      <button class="action-btn"type="button" data-id="${alert.id}">${alert.read ? 'Read' : 'View Details'}</button>
+      <div class="alert-actions">
+        <button class="action-btn" type="button" data-id="${alert.id}">${alert.read ? 'Viewed' : 'View Details'}</button>
+        <button class="delete-btn" type="button" data-id="${alert.id}">Delete</button>
+      </div>
     `;
     alertsList.appendChild(card);
   });
@@ -78,22 +112,61 @@ tabs.forEach(tab => {
 // this block of code adds click event listeners to each tab. When a tab is clicked, it sets that tab as active and calls the `renderAlerts` function with the corresponding filter type. This allows users to easily switch between different categories of alerts (e.g., all, danger, warning, info) and see the relevant alerts based on their selection.
 
 alertsList.addEventListener('click', event => {
-  const button = event.target.closest('.action-btn');
-  if (!button) return;
+  const actionButton = event.target.closest('.action-btn');
+  const deleteButton = event.target.closest('.delete-btn');
 
-  const id = Number(button.dataset.id);
-  const alert = alerts.find(item => item.id === id);
-  if (!alert) return;
+  if (deleteButton) {
+    const id = Number(deleteButton.dataset.id);
+    const alertIndex = alerts.findIndex(item => item.id === id);
+    if (alertIndex === -1) return;
 
-  alert.read = true;
-  button.textContent = 'Read';
+    const shouldDelete = window.confirm('Do you want to delete this notification?');
+    if (!shouldDelete) return;
+
+    alerts.splice(alertIndex, 1);
+    renderAlerts(document.querySelector('.tab.active').dataset.type);
+    return;
+  }
+
+  if (!actionButton) return;
+
+  const id = Number(actionButton.dataset.id);
+  const selectedAlert = alerts.find(item => item.id === id);
+  if (!selectedAlert) return;
+
+  const modal = document.getElementById('detailsModal');
+  const detailsBody = document.getElementById('detailsBody');
+  if (!modal || !detailsBody) return;
+
+  detailsBody.innerHTML = `
+    <p><strong>Title:</strong> ${selectedAlert.title}</p>
+    <p><strong>Type:</strong> ${selectedAlert.type}</p>
+    <p><strong>Time:</strong> ${selectedAlert.time}</p>
+    <p>${selectedAlert.desc}</p>
+  `;
+
+  selectedAlert.read = true;
   renderAlerts(document.querySelector('.tab.active').dataset.type);
+
+  modal.classList.add('show');
+  modal.setAttribute('aria-hidden', 'false');
 });
-// this block of code adds an event listener to the alert list container to handle clicks on the action buttons within each alert card. When a button is clicked, it identifies the corresponding alert by its ID, marks it as read, updates the button text to "Read", and re-renders the alerts based on the currently active filter. This allows users to interact with individual alerts and manage their read status effectively.
+// this block of code adds an event listener to the alert list container to handle clicks on both action and delete buttons within each alert card. When the delete button is clicked, it asks for confirmation and removes the alert if confirmed. When the action button is clicked, it marks the alert as read and updates the display.
 
 markAllBtn.addEventListener('click', () => {
   alerts.forEach(alert => { alert.read = true; });
   renderAlerts(document.querySelector('.tab.active').dataset.type);
 });
 
+const closeModal = document.getElementById('closeModal');
+if (closeModal) {
+  closeModal.addEventListener('click', () => {
+    const modal = document.getElementById('detailsModal');
+    if (!modal) return;
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+  });
+}
+
+addPendingReportAlert();
 renderAlerts();
