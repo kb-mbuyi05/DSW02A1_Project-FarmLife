@@ -37,11 +37,13 @@ document.addEventListener('DOMContentLoaded', function() {
       quantity,
       location,
       description,
-      status,
+      status, // always 'pending'
       submittedAt: new Date().toISOString()
     };
 
     localStorage.setItem('pendingReportAlert', JSON.stringify(reportAlert));
+    // Send notification to Stock Theft Forum
+    localStorage.setItem('forumNotification', JSON.stringify(reportAlert));
     window.location.href = '../notifications.HTML';
   });
 });

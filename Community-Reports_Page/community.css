@@ -100,6 +100,66 @@ nav ul li a.active{
   border-left:5px solid blue; 
 }
 
+.incident-card:hover{ 
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 4px 16px rgba(44,62,80,0.12);
+}
+
+/* HERO SECTION */
+.community-hero {
+  background: linear-gradient(90deg, #f8fafc 60%, #e0f7fa 100%);
+  border-radius: 12px;
+  padding: 32px 24px 24px 24px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 12px rgba(44,62,80,0.07);
+  text-align: center;
+}
+.community-hero h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.2em;
+  color: #2c3e50;
+}
+.community-hero .subtitle {
+  color: #607d8b;
+  font-size: 1.1em;
+  margin-bottom: 1.5em;
+}
+.community-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.2em;
+}
+.community-stats {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  font-size: 1.1em;
+  color: #34495e;
+  margin-bottom: 0.5em;
+}
+
+/* LEGEND */
+.legend {
+  margin-top: 24px;
+  background: #f1f8e9;
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-size: 0.98em;
+}
+.legend ul {
+  padding-left: 0;
+  list-style: none;
+}
+.legend li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+/* MAP SECTION */
 .map-section{ 
   flex:1; 
   background:#ecf0f1; 
@@ -116,6 +176,8 @@ nav ul li a.active{
   justify-content:center; 
   color:#2c3e50; 
   font-weight:bold; 
+  font-size:1.2em;
+  letter-spacing:0.5px;
 }
 
 footer{ 
@@ -137,4 +199,27 @@ footer a{
 
 footer a:hover{ 
   text-decoration:underline; 
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .content {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    margin-bottom: 18px;
+  }
+}
+@media (max-width: 600px) {
+  .community-hero {
+    padding: 18px 6px;
+  }
+  .community-hero h1 {
+    font-size: 1.5em;
+  }
+  .community-stats {
+    flex-direction: column;
+    gap: 8px;
+  }
 }
