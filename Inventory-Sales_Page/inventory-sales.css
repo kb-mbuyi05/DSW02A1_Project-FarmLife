@@ -245,6 +245,51 @@ nav ul li a.active {
   grid-column: auto;
 }
 
+.readiness-panel {
+  grid-column: auto;
+}
+
+.readiness-block {
+  padding: 14px 18px;
+  background: #f8fbff;
+  border-radius: 22px;
+  border: 1px solid rgba(59,130,246,0.12);
+}
+
+.readiness-summary {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.readiness-summary strong {
+  font-size: 2.4rem;
+  color: #1d4ed8;
+}
+
+.readiness-summary span {
+  color: #475569;
+  font-weight: 700;
+}
+
+.risk-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+  display: grid;
+  gap: 12px;
+}
+
+.risk-list li {
+  padding: 14px 16px;
+  background: white;
+  border-radius: 16px;
+  border: 1px solid rgba(148,163,184,0.16);
+  color: #334155;
+}
+
 .ledger-panel {
   grid-column: 1 / -1;
 }

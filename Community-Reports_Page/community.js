@@ -4,7 +4,9 @@ document.querySelectorAll("nav a").forEach(link => {
 });
 
 // Report Theft button
-document.querySelector(".report-btn").addEventListener("click", () => {
-  alert("Redirecting to theft report form...");
-  // Later: window.location.href = "report.html";
-});
+const reportButton = document.querySelector(".report-btn");
+if (reportButton) {
+  reportButton.addEventListener("click", () => {
+    window.location.href = "../Report-Theft_Page/report.html";
+  });
+}

@@ -104,7 +104,23 @@ function initializeCharts() {
   }
 }
 
+function initializeForumBackButton() {
+  const forumButton = document.getElementById('forumBackButton');
+  if (!forumButton) return;
+
+  const userRole = localStorage.getItem('farmLifeUserRole');
+  if (userRole === 'community') {
+    forumButton.style.display = 'inline-flex';
+    forumButton.addEventListener('click', function() {
+      window.location.href = '../Report-Theft_Page/stockthefr_forum.html';
+    });
+  } else {
+    forumButton.style.display = 'none';
+  }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
   setActiveNavLink();
   initializeCharts();
+  initializeForumBackButton();
 });

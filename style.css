@@ -85,6 +85,8 @@ body > .navbar,
 .hero h1 {
   margin: 0 0 10px;
   font-size: clamp(2rem, 2.5vw, 2.5rem);
+  color: #0f172a;
+  letter-spacing: -0.02em;
 }
 
 .sub {
@@ -216,6 +218,17 @@ body > .navbar,
     display: flex;
     gap: 12px;
     flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .seen-note {
+    margin-left: auto;
+    padding: 8px 12px;
+    background: #e0f2fe;
+    color: #1d4ed8;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.9rem;
   }
 
   .action-btn,

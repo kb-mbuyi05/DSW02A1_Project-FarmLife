@@ -5,15 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FarmLife - Inventory & Sales</title>
   <link rel="stylesheet" href="inventory-sales.css">
+  <link rel="stylesheet" href="../shared.css">
   <script src="inventory-sales.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header class="app-header">
-    <div class="header-left">
-      <div class="logo">FarmLife</div>
-      <div class="brand-subtitle">Livestock inventory and sales management</div>
-    </div>
+  <header>
+    <div class="logo">FarmLife</div>
     <nav>
       <ul>
         <li><a href="../Homepage/homepage.html">Home</a></li>
@@ -23,6 +21,9 @@
         <li><a href="../notifications.HTML">Alerts</a></li>
         <li><a href="inventory-sales.html" class="active">Inventory & Sales</a></li>
         <li><a href="../Insights-Analytics_Page/insights-analytics.html">Insights & Analytics</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../Services.html">Services</a></li>
+        <li><a href="../Settings.html">Settings</a></li>
       </ul>
     </nav>
   </header>
@@ -72,13 +73,23 @@
         </div>
       </section>
 
-      <section class="panel chart-panel">
+      <section class="panel readiness-panel">
         <div class="panel-header">
-          <h2>Monthly Revenue Flux</h2>
-          <span class="badge success">Trending</span>
+          <h2>Inventory Readiness & Risk Pulse</h2>
+          <span class="badge warning">High Priority</span>
         </div>
-        <div class="chart-wrapper">
-          <canvas id="revenueChart" height="300"></canvas>
+        <div class="readiness-block">
+          <div class="readiness-summary">
+            <strong>72%</strong>
+            <span>Overall Herd Readiness</span>
+          </div>
+          <p>The latest inventory view highlights security risk, feed availability, and sale readiness for your herd. Focus on the highest-impact actions before the next dispatch.</p>
+          <ul class="risk-list">
+            <li>Sector C theft risk is elevated; increase perimeter checks.</li>
+            <li>Feed reserves for 18% of the herd are below safe levels.</li>
+            <li>Premium sale opportunities available for three prime cattle.</li>
+          </ul>
+          <button class="secondary-btn">Review Action Plan</button>
         </div>
       </section>
     </div>

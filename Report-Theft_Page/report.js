@@ -24,14 +24,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const quantity = document.getElementById('quantity').value.trim();
     const location = document.getElementById('location').value.trim();
     const description = document.getElementById('description').value.trim();
-    const status = document.getElementById('status').value;
+    const status = 'pending';
 
-    if (!farmerName || !animalType || !quantity || Number(quantity) <= 0 || !location || !description || !status) {
+    if (!farmerName || !animalType || !quantity || Number(quantity) <= 0 || !location || !description) {
       alert('Please complete all report details before submitting.');
       return;
     }
 // This block of code retrieves the values from the form inputs, validates that all required fields are filled and that the quantity is a positive number. If any validation fails, it shows an alert and prevents form submission. If validation passes, it creates a report alert object with the form data and the current timestamp, stores it in localStorage, and redirects the user to the notifications page where they can see their submitted report.
     const reportAlert = {
+      id: Date.now(),
       farmerName,
       animalType,
       quantity,
@@ -41,8 +42,8 @@ document.addEventListener('DOMContentLoaded', function() {
       submittedAt: new Date().toISOString()
     };
 
+    localStorage.setItem('reportNotification', JSON.stringify(reportAlert));
     localStorage.setItem('pendingReportAlert', JSON.stringify(reportAlert));
-    // Send notification to Stock Theft Forum
     localStorage.setItem('forumNotification', JSON.stringify(reportAlert));
     window.location.href = '../notifications.HTML';
   });

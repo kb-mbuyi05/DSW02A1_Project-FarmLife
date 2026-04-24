@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FarmLife - Community Reports</title>
   <link rel="stylesheet" href="community.css">
+  <link rel="stylesheet" href="../shared.css">
   <script src="community.js" defer></script>
 </head>
 <body>
@@ -18,47 +19,68 @@
         <li><a href="community.html" class="active">Community</a></li>
         <li><a href="../Inventory-Sales_Page/inventory-sales.html">Inventory & Sales</a></li>
         <li><a href="../Insights-Analytics_Page/insights-analytics.html">Insights & Analytics</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../Services.html">Services</a></li>
+        <li><a href="../Settings.html">Settings</a></li>
         <li><a href="../notifications.HTML">Alerts</a></li>
       </ul>
     </nav>
   </header>
 
   <main class="community-page">
-    <h1>Community Reports</h1>
-    <input type="text" placeholder="Search location or animal type..." class="search-bar">
-    <button class="report-btn">REPORT THEFT INCIDENT</button>
-    <p>Reports (14) | Verified (82%) | Active Searches (3)</p>
+    <section class="community-hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Community</span>
+        <h1>Community Safety & Theft Alerts</h1>
+        <p class="subtitle">Stay informed with verified theft reports, local recovery updates, and community-driven alerts across the region.</p>
+      </div>
+      <div class="community-actions">
+        <input type="text" placeholder="Search location or animal type..." class="search-bar">
+        <button class="report-btn" onclick="location.href='../Report-Theft_Page/report.html'">Report Theft Incident</button>
+      </div>
+      <div class="community-stats">
+        <span><strong>14</strong> Reports</span>
+        <span><strong>82%</strong> Verified</span>
+        <span><strong>3</strong> Active Searches</span>
+      </div>
+    </section>
 
     <div class="content">
       <aside class="sidebar">
-        <h2>Recent Incidents</h2>
+        <div class="sidebar-header">
+          <h2>Recent Incidents</h2>
+          <p>Latest community reports and verified theft alerts.</p>
+        </div>
+
         <div class="incident-card verified">
           <h3>Piet Viljoen — 12 Cattle Stolen</h3>
           <p><strong>Location:</strong> Balfour District, Mpumalanga</p>
           <p>“Brahman-cross herd taken from North pasture. Fence cut at R23. Blue Toyota Hilux seen in area.”</p>
-          <span>Status: Verified</span>
+          <span>Verified</span>
         </div>
 
         <div class="incident-card pending">
           <h3>Sarah Moloi — 45 Sheep Stolen</h3>
           <p><strong>Location:</strong> Harrismith, Free State</p>
           <p>“Merino sheep missing after night storm. Tracks heading towards mountain pass.”</p>
-          <span>Status: Pending</span>
+          <span>Pending</span>
         </div>
 
         <div class="incident-card resolved">
           <h3>David Ngwenya — 8 Goats Stolen</h3>
           <p><strong>Location:</strong> Ladysmith Outskirts, KZN</p>
           <p>“Small group of Boer goats taken from kraal. Recovered 5km away thanks to community tip.”</p>
-          <span>Status: Resolved</span>
+          <span>Resolved</span>
         </div>
 
-        <h3>Incident Legend</h3>
-        <ul>
-          <li>Verified Theft (24h)</li>
-          <li>Unverified Report</li>
-          <li>Recovered / Resolved</li>
-        </ul>
+        <div class="legend">
+          <h3>Incident Legend</h3>
+          <ul>
+            <li><span class="legend-pill verified"></span>Verified Theft</li>
+            <li><span class="legend-pill pending"></span>Unverified Report</li>
+            <li><span class="legend-pill resolved"></span>Recovered / Resolved</li>
+          </ul>
+        </div>
       </aside>
 
       <section class="map-section">

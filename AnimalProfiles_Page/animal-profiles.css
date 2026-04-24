@@ -90,6 +90,13 @@ nav ul li a.active {
   min-height: 640px;
 }
 
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
 .panel-header h3 {
   margin: 0 0 10px;
   font-size: 1.2rem;
@@ -99,6 +106,20 @@ nav ul li a.active {
   margin: 0;
   color: #64748b;
   line-height: 1.6;
+}
+
+.panel-toggle {
+  padding: 10px 16px;
+  border: 1px solid rgba(37,99,235,0.3);
+  background: white;
+  color: #1d4ed8;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.panel-toggle:hover {
+  background: rgba(37,99,235,0.08);
 }
 
 .search-wrap {
@@ -112,6 +133,93 @@ nav ul li a.active {
   border-radius: 16px;
   font-size: 0.98rem;
   color: #0f172a;
+}
+
+.add-animal-panel {
+  margin-bottom: 22px;
+  padding: 20px;
+  border: 1px solid rgba(148,163,184,0.28);
+  border-radius: 24px;
+  background: #f8fafc;
+}
+
+.add-animal-panel.collapsed .animal-form,
+.add-animal-panel.collapsed .form-status-message {
+  display: none;
+}
+
+.animal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.animal-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.95rem;
+  color: #334155;
+}
+
+.animal-form label span {
+  font-weight: 700;
+}
+
+.animal-form input,
+.animal-form select,
+.animal-form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(148,163,184,0.28);
+  border-radius: 14px;
+  font-size: 0.95rem;
+  color: #0f172a;
+  background: white;
+}
+
+.animal-form textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.add-animal-button {
+  width: 100%;
+  padding: 14px 18px;
+  border: none;
+  border-radius: 14px;
+  background: #1d4ed8;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.add-animal-button:hover {
+  background: #1e40af;
+}
+
+.form-status-message {
+  min-height: 24px;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.form-status-message.success {
+  color: #15803d;
+}
+
+.form-status-message.error {
+  color: #b91c1c;
 }
 
 .animal-list {
@@ -419,6 +527,10 @@ footer.site-footer p {
   }
 
   .tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid {
     grid-template-columns: 1fr;
   }
 }

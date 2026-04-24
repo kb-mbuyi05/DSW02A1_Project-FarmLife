@@ -9,43 +9,68 @@ const icons = {
   warning: '⚠️',
   info: 'ℹ️'
 };
-// this block of code initializes the alert data and defines the icons for each alert type. The `alerts` array contains sample alert objects with properties such as `id`, `type`, `title`, `desc`, `time`, and `read` status. The `icons` object maps each alert type to a corresponding emoji for visual representation in the UI. This setup allows for easy management and display of alerts based on their type and status.
-const alerts = [
+
+const defaultAlerts = [
   { id: 1, type: 'danger', title: 'Unusual Movement Detected', desc: 'Cow #102 moved outside boundary', time: '2 mins ago', read: false },
   { id: 2, type: 'warning', title: 'Disease Outbreak Warning', desc: 'FMD reported nearby farms', time: '45 mins ago', read: false },
   { id: 3, type: 'info', title: 'Vaccination Due', desc: '3 cattle scheduled for vaccination', time: '2 hours ago', read: false }
 ];
 
-function addPendingReportAlert() {
-  const storedReport = localStorage.getItem('pendingReportAlert');
-  if (!storedReport) return;
+let alerts = [...defaultAlerts];
+
+function getStoredReportNotification() {
+  const stored = localStorage.getItem('reportNotification') || localStorage.getItem('pendingReportAlert');
+  if (!stored) return null;
 
   try {
-    const report = JSON.parse(storedReport);
-    if (!report || !report.farmerName || !report.animalType || !report.location) {
-      localStorage.removeItem('pendingReportAlert');
-      return;
-    }
-
-    const nextId = alerts.reduce((maxId, alert) => Math.max(maxId, alert.id), 0) + 1;
-    const type = 'danger';
-    const title = `Theft report from ${report.farmerName}`;
-    const desc = `${report.quantity} ${report.animalType} reported stolen at ${report.location}. Status: ${report.status}. ${report.description}`;
-
-    alerts.unshift({
-      id: nextId,
-      type,
-      title,
-      desc,
-      time: 'Just now',
-      read: false
-    });
+    const report = JSON.parse(stored);
+    return report && typeof report === 'object' ? report : null;
   } catch (error) {
-    console.error('Unable to parse stored report alert:', error);
+    console.error('Unable to parse stored report notification:', error);
+    return null;
+  }
+}
+
+function syncReportNotification(report) {
+  if (!report || typeof report !== 'object') return;
+  localStorage.setItem('reportNotification', JSON.stringify(report));
+  localStorage.setItem('pendingReportAlert', JSON.stringify(report));
+  localStorage.setItem('forumNotification', JSON.stringify(report));
+}
+
+function addPendingReportAlert() {
+  const report = getStoredReportNotification();
+  if (!report || !report.farmerName || !report.animalType || !report.location) return;
+  const existing = alerts.find(alert => alert.source === 'report' && alert.id === report.id);
+  const reportId = report.id || (Math.max(...alerts.map(alert => alert.id), 0) + 1);
+  report.id = reportId;
+
+  const title = `Theft report from ${report.farmerName}`;
+  const desc = `${report.quantity} ${report.animalType} reported stolen at ${report.location}. Status: ${report.status}. ${report.description}`;
+
+  if (existing) {
+    existing.title = title;
+    existing.desc = desc;
+    existing.time = 'Just now';
+    existing.seenByForum = !!report.seenByForum;
+    syncReportNotification(report);
+    return;
   }
 
-  localStorage.removeItem('pendingReportAlert');
+  alerts.unshift({
+    id: reportId,
+    type: 'danger',
+    title,
+    desc,
+    time: 'Just now',
+    read: false,
+    source: 'report',
+    seenByForum: !!report.seenByForum
+  });
+
+  syncReportNotification(report);
 }
+
 
 function countUnread() {
   return alerts.filter(alert => !alert.read).length;
@@ -86,6 +111,7 @@ function renderAlerts(filter = 'all') {
       <div class="alert-actions">
         <button class="action-btn" type="button" data-id="${alert.id}">${alert.read ? 'Viewed' : 'View Details'}</button>
         <button class="delete-btn" type="button" data-id="${alert.id}">Delete</button>
+        ${alert.seenByForum ? '<span class="seen-note">Seen by forum</span>' : ''}
       </div>
     `;
     alertsList.appendChild(card);
@@ -147,6 +173,32 @@ alertsList.addEventListener('click', event => {
 
   selectedAlert.read = true;
   renderAlerts(document.querySelector('.tab.active').dataset.type);
+
+  const isReport = selectedAlert.source === 'report';
+  const statusDisplay = isReport ? `<p><strong>Report Status:</strong> ${selectedAlert.status || 'Pending'}</p>` : '';
+  const seenMessage = isReport && selectedAlert.seenByForum
+    ? '<p><strong>Forum Review:</strong> This report has been reviewed by the forum and is being attended.</p>'
+    : '';
+  const contactInfo = isReport ? `
+    <div class="contact-info">
+      <h3>Forum Contact</h3>
+      <p>For direct follow-up, please contact the Stock Theft Forum using the information below.</p>
+      <ul>
+        <li><strong>Phone / WhatsApp:</strong> +27 71 123 4567</li>
+        <li><strong>Email:</strong> thief.official@farmlife.co.za</li>
+      </ul>
+    </div>
+  ` : '';
+
+  detailsBody.innerHTML = `
+    <p><strong>Title:</strong> ${selectedAlert.title}</p>
+    <p>${selectedAlert.desc}</p>
+    ${statusDisplay}
+    ${seenMessage}
+    ${contactInfo}
+    <p><strong>Received:</strong> ${selectedAlert.time}</p>
+    <p>FarmLife is monitoring this incident and will keep you informed with any updates.</p>
+  `;
 
   modal.classList.add('show');
   modal.setAttribute('aria-hidden', 'false');

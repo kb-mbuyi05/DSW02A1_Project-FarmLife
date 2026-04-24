@@ -82,6 +82,13 @@ const notesArea = document.getElementById('notesArea');
 const tabContent = document.getElementById('tabContent');
 const animalList = document.getElementById('animalList');
 const searchInput = document.getElementById('searchAnimal');
+const addAnimalForm = document.getElementById('addAnimalForm');
+const formMessage = document.getElementById('animalFormMessage');
+const animalStatusInput = document.getElementById('animalStatus');
+const animalLocationInput = document.getElementById('animalLocation');
+const animalLatestActivityInput = document.getElementById('animalLatestActivity');
+const addAnimalPanel = document.getElementById('addAnimalPanel');
+const toggleAddAnimalPanelButton = document.getElementById('toggleAddAnimalPanel');
 const tabs = document.querySelectorAll('.tab');
 
 function setActiveNavLink() {
@@ -90,6 +97,117 @@ function setActiveNavLink() {
       link.classList.add('active');
     }
   });
+}
+
+function showFormMessage(text, type) {
+  if (!formMessage) return;
+  formMessage.textContent = text;
+  formMessage.className = 'form-status-message ' + type;
+}
+
+function normalizeAnimalKey(value) {
+  const base = value.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9\-]/g, '');
+  let key = base || `animal-${Date.now()}`;
+  let suffix = 1;
+  while (animalData[key]) {
+    key = `${base || 'animal'}-${suffix}`;
+    suffix += 1;
+  }
+  return key;
+}
+
+function generateLatestActivity(location, status) {
+  const area = location ? location.trim() : 'assigned area';
+  const action = status === 'sick' ? 'Under observation' : status === 'normal' ? 'Moving' : 'Grazing';
+  return `${action} in ${area}`;
+}
+
+function updateLatestActivityField() {
+  if (!animalLatestActivityInput) return;
+  const location = animalLocationInput ? animalLocationInput.value.trim() : '';
+  const status = animalStatusInput ? animalStatusInput.value : 'healthy';
+  animalLatestActivityInput.value = generateLatestActivity(location, status);
+}
+
+function addAnimalToList(animalKey, animal) {
+  const existing = animalList.querySelector(`li[data-id="${animalKey}"]`);
+  if (existing) return existing;
+  const li = document.createElement('li');
+  li.dataset.id = animalKey;
+  li.innerHTML = `
+    <span>${animal.name}</span>
+    <span class="status ${animal.status}">${animal.status.charAt(0).toUpperCase() + animal.status.slice(1)}</span>
+  `;
+  li.addEventListener('click', () => {
+    setActiveAnimalItem(li);
+    updateProfile(animalKey);
+  });
+  animalList.appendChild(li);
+  return li;
+}
+
+function collapseAddAnimalPanel(collapsed) {
+  if (!addAnimalPanel || !toggleAddAnimalPanelButton) return;
+  addAnimalPanel.classList.toggle('collapsed', collapsed);
+  toggleAddAnimalPanelButton.textContent = collapsed ? 'Add another' : 'Hide';
+}
+
+function clearAnimalForm() {
+  if (!addAnimalForm) return;
+  addAnimalForm.reset();
+  updateLatestActivityField();
+}
+
+function handleAddAnimal(event) {
+  event.preventDefault();
+  const name = document.getElementById('animalName').value.trim();
+  const id = document.getElementById('animalTag').value.trim();
+  const breed = document.getElementById('animalBreed').value;
+  const dob = document.getElementById('animalDob').value;
+  const weight = document.getElementById('animalWeight').value.trim();
+  const targetWeight = document.getElementById('animalTargetWeight').value.trim();
+  const status = document.getElementById('animalStatus').value;
+  const location = document.getElementById('animalLocation').value.trim();
+  const nextCheckup = document.getElementById('animalNextCheckup').value.trim();
+  const latestActivity = animalLatestActivityInput ? animalLatestActivityInput.value.trim() : 'No activity recorded.';
+  const note = document.getElementById('animalNote').value.trim() || 'No additional notes.';
+  const general = document.getElementById('animalGeneral').value.trim() || 'No general details available.';
+  const medical = document.getElementById('animalMedical').value.trim() || 'No medical history recorded.';
+  const ownership = document.getElementById('animalOwnership').value.trim() || 'Ownership details pending.';
+
+  if (!name || !id || !breed || !dob || !weight || !targetWeight || !location || !nextCheckup || !latestActivity) {
+    showFormMessage('Please complete all required fields before adding the animal.', 'error');
+    return;
+  }
+
+  const animalKey = normalizeAnimalKey(id || name);
+  animalData[animalKey] = {
+    name,
+    id,
+    breed,
+    dob,
+    targetWeight,
+    weight,
+    status,
+    healthScore: '—',
+    location,
+    nextCheckup,
+    latestActivity,
+    note,
+    general,
+    medical,
+    ownership
+  };
+
+  const newItem = addAnimalToList(animalKey, animalData[animalKey]);
+  if (newItem) {
+    setActiveAnimalItem(newItem);
+    updateProfile(animalKey);
+    newItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    showFormMessage('New animal added to the herd list.', 'success');
+    clearAnimalForm();
+    collapseAddAnimalPanel(true);
+  }
 }
 
 function renderDetails(animal) {
@@ -132,7 +250,9 @@ function updateProfile(animalKey) {
   profileTag.textContent = `${animal.breed} · Tag ${animal.id} · Next vaccine due in ${animal.nextCheckup}`;
   profileStatus.textContent = animal.status.charAt(0).toUpperCase() + animal.status.slice(1);
   profileStatus.className = `pill ${animal.status}`;
-  profileImage.src = `images/${animalKey}.jpg`;
+  if (animal.image) {
+    profileImage.src = animal.image;
+  }
   profileImage.alt = `${animal.name} profile photo`;
   weightValue.textContent = animal.weight;
   healthScore.textContent = animal.healthScore;
@@ -181,6 +301,22 @@ function initializeProfile() {
   searchInput.addEventListener('input', event => {
     filterAnimals(event.target.value);
   });
+
+  if (animalStatusInput && animalLocationInput && animalLatestActivityInput) {
+    animalStatusInput.addEventListener('change', updateLatestActivityField);
+    animalLocationInput.addEventListener('input', updateLatestActivityField);
+    updateLatestActivityField();
+  }
+
+  if (toggleAddAnimalPanelButton) {
+    toggleAddAnimalPanelButton.addEventListener('click', () => {
+      collapseAddAnimalPanel(!addAnimalPanel.classList.contains('collapsed'));
+    });
+  }
+
+  if (addAnimalForm) {
+    addAnimalForm.addEventListener('submit', handleAddAnimal);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', initializeProfile);

@@ -1,0 +1,368 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #0f172a;
+  background: #f4f7fb;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: #f4f7fb;
+}
+
+body {
+  font-family: inherit;
+  line-height: 1.6;
+  color: #0f172a;
+  background: #f4f7fb;
+}
+
+header,
+.topbar,
+.navbar {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 20px 32px;
+  background: #0f172a;
+  color: white;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+}
+
+header .logo,
+.topbar .logo,
+.navbar .logo {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+header nav,
+.topbar nav,
+.navbar nav,
+header .nav,
+.topbar .nav,
+.navbar .nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li,
+.navbar a {
+  margin: 0;
+}
+
+nav ul li a,
+header nav a,
+.topbar nav a,
+.navbar a {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 999px;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+nav ul li a:hover,
+nav ul li a.active,
+header nav a:hover,
+header nav a.active,
+.topbar nav a:hover,
+.topbar nav a.active,
+.navbar a:hover,
+.navbar a.active {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+}
+
+main,
+.container,
+body > .container,
+body > .main,
+body > .dashboard-container,
+body > .inventory-container,
+body > .analytics-container,
+body > .report-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 24px 20px 36px;
+}
+
+.hero,
+.page-header,
+.report-hero,
+.community-hero,
+.dashboard-hero,
+.analytics-hero,
+.form-panel,
+.panel,
+.card,
+.metric-card,
+.stat-card,
+.map-panel,
+.activity-panel,
+.analytics-grid > section,
+.table-wrapper,
+.site-footer,
+.forum-container {
+  background: white;
+  border-radius: 28px;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+  padding: 32px;
+}
+
+.hero,
+.page-header,
+.report-hero,
+.community-hero {
+  background: linear-gradient(135deg, #ffffff 0%, #e5f2ff 100%);
+  margin-bottom: 24px;
+}
+
+.hero h1,
+.page-header h1,
+.report-hero h1,
+.community-hero h1,
+.heading,
+.topbar h1,
+.analytics-hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 2.5vw, 2.8rem);
+  line-height: 1.05;
+}
+
+.hero p,
+.page-header p,
+.report-hero p,
+.community-hero p,
+.analytics-hero p,
+.auth-copy,
+.site-copy,
+.forum-copy {
+  margin: 18px 0 0;
+  color: #475569;
+  font-size: 1rem;
+  line-height: 1.75;
+  max-width: 720px;
+}
+
+.hero-actions,
+.header-actions,
+.community-actions,
+.hero-buttons,
+.report-actions,
+.actions-row,
+.page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 20px;
+}
+
+button,
+.primary-btn,
+.report-btn,
+.action-btn,
+.delete-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 18px;
+  padding: 14px 24px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+button:hover,
+.primary-btn:hover,
+.report-btn:hover,
+.action-btn:hover,
+.delete-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.secondary-btn,
+button.secondary,
+.secondary-action,
+.secondary-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.secondary-btn:hover,
+button.secondary:hover,
+.secondary-action:hover,
+.secondary-link:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 16px;
+  background: #ffffff;
+  color: #0f172a;
+  font: inherit;
+}
+
+textarea {
+  min-height: 140px;
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #93c5fd;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.panel-header,
+.card-header,
+.map-header,
+.activity-header,
+.status-row,
+.insight-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.panel-header h2,
+.card-header h2,
+.map-header h2,
+.activity-header h2,
+.insight-header h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  color: #0f172a;
+}
+
+.badge,
+.status-badge,
+.legend-pill,
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+footer,
+.site-footer {
+  background: #0f172a;
+  color: #cbd5e1;
+  text-align: center;
+  padding: 28px 20px;
+  margin-top: 24px;
+}
+
+footer a,
+.site-footer a,
+footer a:visited,
+.site-footer a:visited {
+  color: #cbd5e1;
+  text-decoration: none;
+}
+
+footer a:hover,
+.site-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+  header,
+  .topbar,
+  .navbar {
+    padding: 18px 20px;
+  }
+
+  main,
+  .container,
+  body > .dashboard-container,
+  body > .inventory-container,
+  body > .analytics-container,
+  body > .report-page {
+    padding: 20px;
+  }
+
+  .hero,
+  .page-header,
+  .report-hero,
+  .community-hero,
+  .panel,
+  .card,
+  .forum-container {
+    padding: 24px;
+  }
+}
+
+@media (max-width: 680px) {
+  header,
+  .topbar,
+  .navbar {
+    justify-content: center;
+    text-align: center;
+  }
+
+  nav ul {
+    justify-content: center;
+  }
+
+  .hero-actions,
+  .header-actions,
+  .community-actions,
+  .hero-buttons,
+  .report-actions,
+  .actions-row,
+  .page-actions {
+    justify-content: center;
+  }
+}

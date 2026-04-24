@@ -1,42 +1,60 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FarmLife - Login</title>
   <link rel="stylesheet" href="login.css">
+  <link rel="stylesheet" href="../shared.css">
   <script src="login.js" defer></script>
 </head>
 <body>
   <!--Header section with navigation bar-->
   <header>
     <div class="logo">FarmLife</div>
-    <nav>
-      <ul>
-        <li><a href="../Homepage/homepage.html">Home</a></li>
-        <li><a href="../Dashboard_Page/dashboard.html">Dashboard</a></li>
-        <li><a href="../AnimalProfiles_Page/animal-profiles.html">Animals</a></li>
-        <li><a href="../Community-Reports_Page/community.html">Community</a></li>
-        <li><a href="../notifications.HTML">Alerts</a></li>
-        <li><a href="../Inventory-Sales_Page/inventory-sales.html">Inventory & Sales</a></li>
-        <li><a href="../Insights-Analytics_Page/insights-analytics.html">Insights & Analytics</a></li>
-      </ul>
-    </nav>
   </header>
 
   <!--Main content section with login form-->
   <main class="auth-container">
+    <div class="decorative-shapes">
+      <span class="shape large"></span>
+      <span class="shape medium"></span>
+      <span class="shape small"></span>
+    </div>
+    <h1>Welcome to FarmLife</h1>
+    <p class="hero-heading">Smart Farming Starts Here</p>
     <h2>Login to FarmLife</h2>
-    <p>Access your dashboard and manage your herd securely</p>
     <form action="" id="loginForm">
+      <fieldset class="role-selection">
+        <legend>Select your role</legend>
+        <div class="role-grid">
+          <label class="role-card" for="role-admin">
+            <input type="radio" id="role-admin" name="role" value="admin">
+            <span class="role-badge">Admin</span>
+            <strong>Admin</strong>
+          </label>
+          <label class="role-card" for="role-farmer">
+            <input type="radio" id="role-farmer" name="role" value="farmer">
+            <span class="role-badge">Farmer</span>
+            <strong>Farmer</strong>
+          </label>
+          <label class="role-card" for="role-community">
+            <input type="radio" id="role-community" name="role" value="community">
+            <span class="role-badge">Community</span>
+            <strong>Forum</strong>
+          </label>
+        </div>
+      </fieldset>
+
       <label for="email">Email</label>
       <input type="email" id="email" required>
 
       <label for="password">Password</label>
       <input type="password" id="password" required>
-      <input type="checkbox" id="showPassword"> Show Password
+      <label class="show-password"><input type="checkbox" id="showPassword"> Show Password</label>
 
       <button type="submit">Login</button>
+      <div id="loginMessage" class="login-message" aria-live="polite"></div>
     </form>
 
     <!--Links for sign up and forgot password-->

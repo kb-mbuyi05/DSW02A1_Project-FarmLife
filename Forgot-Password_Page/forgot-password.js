@@ -16,13 +16,26 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('forgotForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
+    const destination = email || 'khakakatangana@gmail.com';
 
     if (!email) {
       alert('Please enter your email address.');
       return;
     }
 
-    alert(`A password reset link has been sent to ${email}.`);
-    window.location.href = 'login.html';
+    const newPassword = Array.from({ length: 10 }, () => {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+      return chars.charAt(Math.floor(Math.random() * chars.length));
+    }).join('');
+
+    alert(
+      `A password reset email has been sent to ${destination}.\n\n` +
+      `Your temporary password is: ${newPassword}\n\n` +
+      'You will be redirected to the login page to sign in with the new password.'
+    );
+
+    setTimeout(() => {
+      window.location.href = '../Log-in_Page/login.html';
+    }, 500);
   });
 });

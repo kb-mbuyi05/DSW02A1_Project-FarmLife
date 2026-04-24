@@ -5,17 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FarmLife - Insights & Analytics</title>
   <link rel="stylesheet" href="insights-analytics.css">
+  <link rel="stylesheet" href="../shared.css">
   <script src="insight-analytics.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-  <header class="app-header">
-    <div class="header-left">
-      <div class="logo">FarmLife</div>
-      <div class="brand-subtitle">Data-driven intelligence for livestock management</div>
-    </div>
+  <header>
+    <div class="logo">FarmLife</div>
     <nav>
       <ul>
+        <li><a href="../Report-Theft_Page/stockthefr_forum.html">← Forum</a></li>
         <li><a href="../Homepage/homepage.html">Home</a></li>
         <li><a href="../Dashboard_Page/dashboard.html">Dashboard</a></li>
         <li><a href="../AnimalProfiles_Page/animal-profiles.html">Animals</a></li>
@@ -23,6 +22,9 @@
         <li><a href="../notifications.HTML">Alerts</a></li>
         <li><a href="../Inventory-Sales_Page/inventory-sales.html">Inventory & Sales</a></li>
         <li><a href="insights-analytics.html" class="active">Insights & Analytics</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../Services.html">Services</a></li>
+        <li><a href="../Settings.html">Settings</a></li>
       </ul>
     </nav>
   </header>
@@ -34,6 +36,7 @@
         <p>Real-time insights into livestock health, breeding forecasts, and security trends across your operations.</p>
       </div>
       <div class="header-actions">
+        <button id="forumBackButton" type="button" class="secondary-btn" style="display:none;" aria-label="Back to forum">← Back to Forum</button>
         <button type="button" class="secondary-btn">Export Report</button>
       </div>
     </section>

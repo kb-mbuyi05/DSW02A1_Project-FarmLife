@@ -64,38 +64,6 @@ function initializeCharts() {
     });
   }
 // This block initializes a line chart using Chart.js to display the growth of the herd and units sold over the first six months of the year. It includes styling for the lines, points, and area under the curves for better visualization.
-  const revenueCtx = document.getElementById('revenueChart')?.getContext('2d');
-  if (revenueCtx) {
-    new Chart(revenueCtx, {
-      type: 'bar',
-      data: {
-        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-        datasets: [
-          {
-            label: 'Revenue (R)',
-            data: [65000, 70000, 75000, 72000, 68000, 72000],
-            backgroundColor: '#10b981',
-            borderRadius: 8
-          }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        plugins: {
-          legend: {
-            display: true,
-            position: 'top'
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
-  }
 }
 // This block initializes a bar chart using Chart.js to display the revenue generated from sales over the first six months of the year. It includes styling for the bars and ensures the chart is responsive and maintains its aspect ratio.
 function setupSaleForm() {

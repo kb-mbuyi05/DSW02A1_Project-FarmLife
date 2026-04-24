@@ -4,22 +4,24 @@
   <meta charset="UTF-8">
   <title>FarmLife - Animal Profiles</title>
   <link rel="stylesheet" href="animal-profiles.css">
+  <link rel="stylesheet" href="../shared.css">
   <script src="animal-profiles.js" defer></script>
 </head>
 <body>
-  <header class="app-header">
-    <div class="header-left">
-      <div class="logo">FarmLife</div>
-      <div class="brand-subtitle">Smart livestock intelligence for modern farms</div>
-    </div>
+  <header>
+    <div class="logo">FarmLife</div>
     <nav>
       <ul>
         <li><a href="../Homepage/homepage.html">Home</a></li>
         <li><a href="animal-profiles.html" class="active">Animals</a></li>
+        <li><a href="../Dashboard_Page/dashboard.html">Dashboard</a></li>
         <li><a href="../Community-Reports_Page/community.html">Community</a></li>
         <li><a href="../notifications.HTML">Alerts</a></li>
         <li><a href="../Inventory-Sales_Page/inventory-sales.html">Inventory & Sales</a></li>
         <li><a href="../Insights-Analytics_Page/insights-analytics.html">Insights & Analytics</a></li>
+        <li><a href="../about.html">About</a></li>
+        <li><a href="../Services.html">Services</a></li>
+        <li><a href="../Settings.html">Settings</a></li>
       </ul>
     </nav>
   </header>
@@ -32,6 +34,51 @@
       </div>
       <div class="search-wrap">
         <input id="searchAnimal" type="search" placeholder="Search animals..." aria-label="Search animals">
+      </div>
+      <div class="add-animal-panel" id="addAnimalPanel">
+        <div class="panel-header">
+          <div>
+            <h3>Add animal to herd</h3>
+            <p>Enter the details that uniquely identify each animal, then add it to the herd list.</p>
+          </div>
+          <button id="toggleAddAnimalPanel" type="button" class="panel-toggle">Hide</button>
+        </div>
+        <form id="addAnimalForm" class="animal-form">
+          <div class="form-grid">
+            <label><span>Name</span><input id="animalName" type="text" required></label>
+            <label><span>Tag ID</span><input id="animalTag" type="text" required></label>
+            <label><span>Breed</span><select id="animalBreed" required>
+              <option value="">Select breed</option>
+              <option value="Brahman">Brahman</option>
+              <option value="Angus">Angus</option>
+              <option value="Hereford">Hereford</option>
+              <option value="Dorper">Dorper</option>
+              <option value="Nguni">Nguni</option>
+              <option value="Simbrah">Simbrah</option>
+              <option value="Beefmaster">Beefmaster</option>
+              <option value="Charolais">Charolais</option>
+              <option value="Bonsmara">Bonsmara</option>
+              <option value="Other">Other</option>
+            </select></label>
+            <label><span>Date of Birth</span><input id="animalDob" type="date" required></label>
+            <label><span>Weight</span><input id="animalWeight" type="text" required placeholder="e.g. 520 kg"></label>
+            <label><span>Target Weight</span><input id="animalTargetWeight" type="text" required placeholder="e.g. 750 kg"></label>
+            <label><span>Status</span><select id="animalStatus">
+              <option value="healthy">Healthy</option>
+              <option value="normal">Normal</option>
+              <option value="sick">Sick</option>
+            </select></label>
+            <label><span>Location</span><input id="animalLocation" type="text" required></label>
+            <label><span>Next Checkup</span><input id="animalNextCheckup" type="text" required placeholder="e.g. 14 days"></label>
+            <label><span>Latest Activity</span><input id="animalLatestActivity" type="text" readonly placeholder="Auto-generated from status and location"></label>
+          </div>
+          <label class="full-width"><span>Note</span><textarea id="animalNote" rows="2" placeholder="Optional summary note"></textarea></label>
+          <label class="full-width"><span>General info</span><textarea id="animalGeneral" rows="2" placeholder="Optional general information"></textarea></label>
+          <label class="full-width"><span>Medical history</span><textarea id="animalMedical" rows="2" placeholder="Optional medical history"></textarea></label>
+          <label class="full-width"><span>Ownership info</span><textarea id="animalOwnership" rows="2" placeholder="Optional ownership provenance"></textarea></label>
+          <button type="submit" class="add-animal-button">Add Animal</button>
+          <div id="animalFormMessage" class="form-status-message" aria-live="polite"></div>
+        </form>
       </div>
       <ul class="animal-list" id="animalList">
         <li data-id="bessie" class="active"><span>Bessie</span><span class="status healthy">Healthy</span></li>

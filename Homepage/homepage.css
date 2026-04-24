@@ -44,32 +44,43 @@ nav ul li a:hover{
 
 .hero{
   text-align: center;
-  padding: 40px;
+  padding: 80px 20px;
   background: #f4f4f4;
 }
 
 .hero h1{
-  font-size: 2em;
-  margin-bottom: 10px;
+  font-size: 2.6em;
+  margin-bottom: 28px;
+  letter-spacing: 0.02em;
+}
+
+.hero-buttons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
 }
 
 .hero-buttons button{
-  margin: 10px;
-  padding: 10px 20px;
+  min-width: 180px;
+  padding: 14px 24px;
   background: #2c3e50;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
+  font-weight: 700;
+}
+
+.hero-buttons button.secondary{
+  background: transparent;
+  border: 2px solid #2c3e50;
+  color: #2c3e50;
 }
 
 .hero-buttons button:hover{
-  background: #1a252f;
-}
-
-.stats{
-  margin-top: 20px;
-  font-weight: bold;
+  opacity: 0.95;
 }
 
 .reality{
