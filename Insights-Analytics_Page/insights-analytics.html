@@ -5,7 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FarmLife - Insights & Analytics</title>
   <link rel="stylesheet" href="insights-analytics.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
   <link rel="stylesheet" href="../shared.css">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js" defer></script>
   <script src="insight-analytics.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -127,8 +130,9 @@
           <h2>Theft Hotspot Heatmap</h2>
           <span class="badge danger">High Risk</span>
         </div>
+        <p class="heatmap-note">Red indicates the highest-risk hotspot area; green indicates lower-risk provinces.</p>
         <div class="map-placeholder">
-          <div class="placeholder-content">Heatmap Visualization</div>
+          <div id="heatmap"></div>
         </div>
         <button type="button" class="primary-btn">View Incident Details</button>
       </section>

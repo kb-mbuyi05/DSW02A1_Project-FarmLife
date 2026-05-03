@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <title>FarmLife - Animal Profiles</title>
   <link rel="stylesheet" href="animal-profiles.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
   <link rel="stylesheet" href="../shared.css">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
   <script src="animal-profiles.js" defer></script>
 </head>
 <body>
@@ -34,6 +36,8 @@
       </div>
       <div class="search-wrap">
         <input id="searchAnimal" type="search" placeholder="Search animals..." aria-label="Search animals">
+        <div id="apiStatusMessage" class="api-status-message" aria-live="polite"></div>
+        <button id="loadZooAnimals" type="button" class="load-api-button">Load free animal data</button>
       </div>
       <div class="add-animal-panel" id="addAnimalPanel">
         <div class="panel-header">
@@ -80,6 +84,27 @@
           <div id="animalFormMessage" class="form-status-message" aria-live="polite"></div>
         </form>
       </div>
+      <div class="incident-panel">
+        <div class="panel-header">
+          <div>
+            <h3>Recent incidents</h3>
+            <p>Blue pins indicate solved incidents, green are verified, and red are unresolved reports.</p>
+          </div>
+        </div>
+        <ul class="incident-list" id="incidentList"></ul>
+        <div class="incident-map-card">
+          <h4>Theft marker map</h4>
+          <div id="incidentMap"></div>
+        </div>
+        <div class="legend incident-legend">
+          <h3>Incident Legend</h3>
+          <ul>
+            <li><span class="legend-pill resolved"></span>Resolved / Solved</li>
+            <li><span class="legend-pill verified"></span>Verified Report</li>
+            <li><span class="legend-pill pending"></span>Unresolved Report</li>
+          </ul>
+        </div>
+      </div>
       <ul class="animal-list" id="animalList">
         <li data-id="bessie" class="active"><span>Bessie</span><span class="status healthy">Healthy</span></li>
         <li data-id="duke"><span>Duke</span><span class="status sick">Sick</span></li>
@@ -98,7 +123,7 @@
           <p id="profileTag">Brahman cow · Tag SA-442-90 · Next vaccine due in 14 days</p>
         </div>
         <div class="profile-avatar">
-          <img id="profileImage" src="images/bessie.jpg" alt="Bessie profile">
+          <img id="profileImage" src="../Brahman _ Cattle, Breed, Heat Tolerance, Adaptability, & Facts _ Britannica_files/Brahman-cow-cattle.jpg" alt="Bessie profile">
         </div>
       </div>
 
@@ -156,6 +181,11 @@
           <li><strong>Daily feed plan:</strong> Mixed roughage + energy supplement</li>
           <li><strong>Tracking status:</strong> Live</li>
         </ul>
+      </div>
+
+      <div class="profile-card map-card">
+        <h2>Habitat map</h2>
+        <div id="animalMap"></div>
       </div>
     </section>
   </main>

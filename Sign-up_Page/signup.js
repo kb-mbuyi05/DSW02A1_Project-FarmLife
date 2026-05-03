@@ -51,6 +51,29 @@ function validateConfirmPassword(password, confirmedPassword) {
   }
   return true;
 }
+
+function getStoredUsers() {
+  const stored = localStorage.getItem('farmLifeUsers');
+  if (!stored) return [];
+  try {
+    return JSON.parse(stored) || [];
+  } catch (error) {
+    console.warn('Could not parse stored users:', error);
+    return [];
+  }
+}
+
+function saveUser(user) {
+  const users = getStoredUsers();
+  users.push(user);
+  localStorage.setItem('farmLifeUsers', JSON.stringify(users));
+}
+
+function isEmailRegistered(email, role) {
+  const users = getStoredUsers();
+  return users.some(user => user.email.toLowerCase() === email.toLowerCase() && user.role === role);
+}
+
 // This function validates the confirmed password input by checking that it is not empty and that it matches the password input. If the validation fails, it shows an alert with the appropriate message and returns false to prevent form submission. If the validation passes, it returns true, allowing the form submission process to continue.
 function setActiveNavLink() {
   const currentPage = window.location.pathname.split('/').pop();
@@ -72,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // This block of code adds an event listener to the sign-up form submission. When the form is submitted, it prevents the default behavior, retrieves the input values for name, email, password, and confirmed password, and then calls the respective validation functions for each input. If any validation fails, it will show an alert and prevent form submission. If all validations pass, it redirects the user to the login page.
     const name = document.getElementById('name').value.trim();
     const email = document.getElementById('email').value.trim();
+    const role = document.querySelector('input[name="role"]:checked')?.value || 'farmer';
     const password = document.getElementById('password').value.trim();
     const confirmedPassword = document.getElementById('confirmPassword').value.trim();
 
@@ -80,6 +104,25 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!validatePassword(password)) return;
     if (!validateConfirmPassword(password, confirmedPassword)) return;
 
+    if (role !== 'farmer' && role !== 'community' && role !== 'admin') {
+      alert('Selected role is not allowed for sign up.');
+      return;
+    }
+
+    if (isEmailRegistered(email, role)) {
+      alert('An account with this email and role already exists. Please login instead.');
+      return;
+    }
+
+    saveUser({
+      name,
+      email,
+      password,
+      role,
+      createdAt: new Date().toISOString()
+    });
+
+    alert('Account created successfully. Please login with your new credentials.');
     window.location.href = '../Log-in_Page/login.html';
   });
 });

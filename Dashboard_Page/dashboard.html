@@ -72,9 +72,19 @@
           <h2>Live GPS Tracker</h2>
           <span id="mapStatus">Tracking active</span>
         </div>
-        <div id="map" class="map">
-          <div class="marker" id="marker">Bessie 04 (Battery 88%)</div>
+        <div class="map-controls" id="trackerControls">
+          <span>Tracking:</span>
         </div>
+        <div id="map" class="map">
+          <div class="location-grid"></div>
+          <div class="tracker" id="marker">
+            <div class="tracker-shadow"></div>
+            <div class="tracker-body"></div>
+            <div class="tracker-direction" id="trackerDirection"></div>
+            <div class="tracker-label" id="trackerLabel">Milo 18</div>
+          </div>
+        </div>
+        <div class="tracker-caption" id="trackerCaption">Heading northeast toward East Range • Speed 14 km/h</div>
       </div>
 
       <div class="activity-panel">

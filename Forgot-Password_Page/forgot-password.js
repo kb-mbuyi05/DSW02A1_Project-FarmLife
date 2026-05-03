@@ -12,14 +12,47 @@ function setActiveNavLink() {
 
 document.addEventListener('DOMContentLoaded', function() {
   setActiveNavLink();
+  emailjs.init('YOUR_EMAILJS_PUBLIC_KEY');
+
+  const forgotMessage = document.getElementById('forgotMessage');
+
+  function getStoredUsers() {
+    const stored = localStorage.getItem('farmLifeUsers');
+    if (!stored) return [];
+    try {
+      return JSON.parse(stored) || [];
+    } catch (error) {
+      console.warn('Could not parse stored users:', error);
+      return [];
+    }
+  }
+
+  function findUserByEmail(email) {
+    const users = getStoredUsers();
+    return users.find(user => user.email.toLowerCase() === email.toLowerCase());
+  }
+
+  function updateUserPassword(email, newPassword) {
+    const users = getStoredUsers();
+    const index = users.findIndex(user => user.email.toLowerCase() === email.toLowerCase());
+    if (index === -1) return false;
+    users[index].password = newPassword;
+    localStorage.setItem('farmLifeUsers', JSON.stringify(users));
+    return true;
+  }
+
+  function showForgotMessage(message, type) {
+    forgotMessage.textContent = message;
+    forgotMessage.className = 'login-message ' + type;
+  }
 
   document.getElementById('forgotForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const email = document.getElementById('email').value.trim();
-    const destination = email || 'khakakatangana@gmail.com';
+    showForgotMessage('', '');
 
     if (!email) {
-      alert('Please enter your email address.');
+      showForgotMessage('Please enter your email address.', 'error');
       return;
     }
 
@@ -28,11 +61,15 @@ document.addEventListener('DOMContentLoaded', function() {
       return chars.charAt(Math.floor(Math.random() * chars.length));
     }).join('');
 
-    alert(
+    const user = findUserByEmail(email);
+    if (!user) {
+      showForgotMessage('No account found with that email. Please sign up first.', 'error');
+      return;
+    }
       `A password reset email has been sent to ${destination}.\n\n` +
       `Your temporary password is: ${newPassword}\n\n` +
       'You will be redirected to the login page to sign in with the new password.'
-    );
+    ;
 
     setTimeout(() => {
       window.location.href = '../Log-in_Page/login.html';
