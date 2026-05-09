@@ -1,13 +1,27 @@
+// Animal Profiles JavaScript
+
 const ZOO_API_SOURCES = [
-  "https://zoo-animal-api.herokuapp.com/animals/rand/10",
   "https://zoo-animal-api.vercel.app/animals/rand/10",
-  "https://api.allorigins.win/raw?url=https://zoo-animal-api.herokuapp.com/animals/rand/10",
-  "https://api.allorigins.win/raw?url=https://zoo-animal-api.vercel.app/animals/rand/10"
+  "https://zoo-animal-api.vercel.app/animals/rand/20",
+  "https://api.allorigins.win/raw?url=https://zoo-animal-api.vercel.app/animals/rand/10",
+  "https://api.allorigins.win/raw?url=https://zoo-animal-api.vercel.app/animals/rand/20"
 ];
 const GBIF_API_URL = "https://api.gbif.org/v1/species/match?name=";
 const WIKI_API_URL = "https://en.wikipedia.org/api/rest_v1/page/summary/";
 const NOMINATIM_URL = "https://nominatim.openstreetmap.org/search?format=json&limit=1&q=";
-
+const SA_PROVINCE_API_URL = "https://nominatim.openstreetmap.org/search?format=json&polygon_geojson=1&q=";
+const SOUTH_AFRICA_PROVINCES = [
+  'Eastern Cape',
+  'Free State',
+  'Gauteng',
+  'KwaZulu-Natal',
+  'Limpopo',
+  'Mpumalanga',
+  'Northern Cape',
+  'North West',
+  'Western Cape'
+];
+// this function generates a default image URL based on the breed or a fallback query. It uses Unsplash's source API to fetch a relevant image. The query is encoded to ensure it works correctly in a URL. This allows for dynamic image generation when specific breed images are not available in the predefined mapping, ensuring that each animal profile has an appropriate visual representation even if the breed is not recognized or specified.
 const DEFAULT_ANIMAL_IMAGE = query => `https://source.unsplash.com/featured/320x320/?${encodeURIComponent(query)}`;
 
 const BREED_IMAGE_MAP = {
@@ -21,13 +35,13 @@ const BREED_IMAGE_MAP = {
   Charolais: '../Brahman _ Cattle, Breed, Heat Tolerance, Adaptability, & Facts _ Britannica_files/Red-Poll-cow-calf.jpg',
   Bonsmara: '../Brahman _ Cattle, Breed, Heat Tolerance, Adaptability, & Facts _ Britannica_files/Brahman-cow-cattle(2).jpg'
 };
-
+// this mapping can be expanded with more breeds and specific images as needed, using the breed name as the key and a relevant image URL as the value.
 function getBreedImage(breed, fallbackQuery) {
   if (!breed) return DEFAULT_ANIMAL_IMAGE(fallbackQuery || 'livestock');
   const normalized = breed.trim();
   return BREED_IMAGE_MAP[normalized] || DEFAULT_ANIMAL_IMAGE(`${normalized} cattle`);
 }
-
+// The getBreedImage function checks if a specific breed image is available in the BREED_IMAGE_MAP. If it is, it returns that image URL. If not, it generates a default image URL using the breed name as a search query on Unsplash, which provides a relevant image based on the breed. The fallbackQuery parameter allows for a more general search term if the breed is not specified or recognized. This approach ensures that each animal profile has an appropriate visual representation, enhancing the user experience while browsing the profiles.
 const INCIDENT_DATA = [
   {
     id: 'inc1',
@@ -61,11 +75,8 @@ const INCIDENT_DATA = [
 const apiStatusMessage = document.getElementById('apiStatusMessage');
 const loadZooAnimalsButton = document.getElementById('loadZooAnimals');
 const incidentListElement = document.getElementById('incidentList');
-const animalMapContainer = document.getElementById('animalMap');
 const incidentMapContainer = document.getElementById('incidentMap');
 
-let animalMap;
-let animalMarker;
 let incidentMap;
 
 function updateApiStatus(message, type = 'info') {
@@ -81,27 +92,52 @@ function renderAnimalList() {
     addAnimalToList(animalKey, animal);
   });
 }
-
+// The renderAnimalList function iterates over the animalData object, which contains all the animal profiles, and calls addAnimalToList for each entry. This function creates a list item for each animal and appends it to the animalList element in the DOM. This allows users to see a list of all registered animals and select them to view their profiles. The list is dynamically generated based on the current state of the animalData, ensuring that any new animals added through the form or loaded from APIs are displayed correctly.
+function parseZooAnimalResponse(data) {
+  if (!data) return [];
+  if (Array.isArray(data)) return data;
+  if (typeof data === 'object') {
+    if (Array.isArray(data.animals)) return data.animals;
+    if (Array.isArray(data.data)) return data.data;
+    if (Array.isArray(data.results)) return data.results;
+    return [data];
+  }
+  return [];
+}
+//  The parseZooAnimalResponse function is designed to handle various response formats from the Zoo Animal API. It checks if the response is an array and returns it directly. If the response is an object, it looks for common properties that might contain the animal data, such as 'animals', 'data', or 'results'. If it finds any of these properties and they are arrays, it returns that array. If none of these properties are found but the response is still an object, it wraps it in an array and returns it. This flexible parsing approach ensures that the application can handle different response structures from the API without breaking, allowing for a more robust integration with external data sources.
 async function fetchZooAnimals() {
+  const animals = [];
   let lastError = null;
 
   for (const url of ZOO_API_SOURCES) {
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        mode: 'cors',
+        cache: 'no-store',
+        headers: { 'Accept': 'application/json' }
+      });
       if (!response.ok) {
         lastError = new Error(`Zoo Animal API failed (${url}): ${response.status}`);
         continue;
       }
       const data = await response.json();
-      if (Array.isArray(data) && data.length) {
-        return data;
-      }
-      if (data && typeof data === 'object' && Object.keys(data).length) {
-        return [data];
+      const parsed = parseZooAnimalResponse(data);
+      if (parsed.length) {
+        animals.push(...parsed);
       }
     } catch (error) {
       lastError = error;
     }
+  }
+// After attempting to fetch from all sources, the function checks if any animals were successfully retrieved. If so, it filters out duplicates based on a unique key derived from the animal's id or name. If no animals were retrieved, it throws the last encountered error or a generic error indicating that the Zoo Animal API is unavailable. This ensures that the application can gracefully handle API failures while still providing feedback on the issue.
+  if (animals.length) {
+    const seen = new Set();
+    return animals.filter(item => {
+      const key = `${item.id || item.name || ''}`.trim().toLowerCase();
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
   }
 
   throw lastError || new Error('Zoo Animal API unavailable.');
@@ -150,45 +186,76 @@ async function geocodeLocation(query) {
   }
 }
 
-function initAnimalMap() {
-  if (!animalMapContainer || !window.L) return;
-  animalMap = L.map('animalMap', {
-    center: [-29.0, 24.0],
-    zoom: 5,
-    minZoom: 5,
-    maxZoom: 10,
-    maxBounds: [[-35.0, 16.0], [-22.0, 33.0]],
-    zoomControl: true
-  });
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
-  }).addTo(animalMap);
-  animalMarker = L.marker([-29.0, 24.0]).addTo(animalMap).bindPopup('South Africa');
-}
 
 function initIncidentMap() {
   if (!incidentMapContainer || !window.L) return;
+  const southAfricaBounds = [[-35.5, 16.0], [-21.0, 33.5]];
+
   incidentMap = L.map('incidentMap', {
     center: [-29.0, 24.0],
     zoom: 5,
     minZoom: 5,
     maxZoom: 10,
-    maxBounds: [[-35.0, 16.0], [-22.0, 33.0]],
+    maxBounds: southAfricaBounds,
     zoomControl: true
   });
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(incidentMap);
+  incidentMap.fitBounds(southAfricaBounds);
+  loadProvinceBoundaries();
 }
 
-function setMapLocation(lat, lon, label) {
-  if (!animalMap || !animalMarker || !lat || !lon) return;
-  const position = [parseFloat(lat), parseFloat(lon)];
-  animalMarker.setLatLng(position).bindPopup(label || 'Animal location').openPopup();
-  animalMap.setView(position, 4);
+async function fetchProvinceBoundary(province) {
+  try {
+    const response = await fetch(`${SA_PROVINCE_API_URL}${encodeURIComponent(province + ', South Africa')}`);
+    if (!response.ok) return null;
+    const items = await response.json();
+    if (!Array.isArray(items) || !items.length) return null;
+    return items[0];
+  } catch (error) {
+    console.warn('Province boundary fetch failed for', province, error);
+    return null;
+  }
+}
+
+async function loadProvinceBoundaries() {
+  if (!incidentMap || !window.L) return;
+
+  const provinceLayers = [];
+  for (const province of SOUTH_AFRICA_PROVINCES) {
+    const provinceData = await fetchProvinceBoundary(province);
+    if (!provinceData || !provinceData.geojson) continue;
+
+    const layer = L.geoJSON(provinceData.geojson, {
+      style: {
+        color: '#22c55e',
+        weight: 2,
+        opacity: 0.9,
+        fillOpacity: 0.08,
+        dashArray: '5,6'
+      }
+    }).addTo(incidentMap);
+
+    const label = L.marker([provinceData.lat || -29.0, provinceData.lon || 24.0], {
+      icon: L.divIcon({
+        className: 'province-label',
+        html: `<span>${province}</span>`,
+        iconSize: [0, 0]
+      })
+    }).addTo(incidentMap);
+    provinceLayers.push(layer, label);
+  }
+
+  if (provinceLayers.length) {
+    updateApiStatus('South Africa province boundaries loaded for theft tracking.', 'success');
+  } else {
+    updateApiStatus('Could not load province boundaries. Showing regional theft markers only.', 'warning');
+  }
 }
 
 function getIncidentMarkerColor(status) {
+
   if (status === 'resolved' || status === 'solved') return '#2563eb';
   if (status === 'verified') return '#16a34a';
   return '#ef4444';
@@ -293,17 +360,19 @@ function addApiAnimals(animals) {
 }
 
 async function loadAnimalsFromApi() {
-  if (!animalList) return;
+  if (!animalList) return false;
   try {
     const animals = await fetchZooAnimals();
     if (!Array.isArray(animals) || !animals.length) {
       throw new Error('No animals returned by the Zoo Animal API.');
     }
     addApiAnimals(animals);
-    updateApiStatus(`Loaded ${animals.length} animals from free animal APIs.`, 'success');
+    updateApiStatus(`Loaded ${animals.length} free animals into the registered herd list.`, 'success');
+    return true;
   } catch (error) {
-    updateApiStatus('Free animal APIs failed, using built-in default animals.', 'error');
+    updateApiStatus('Free animal APIs unavailable. Displaying built-in herd profiles instead.', 'warning');
     console.warn('Zoo Animal API fetch failed:', error);
+    return false;
   }
 }
 
@@ -619,10 +688,7 @@ async function updateSelectedAnimal(animalKey) {
     const location = await geocodeLocation(query);
     if (location) {
       animal.coords = location;
-      setMapLocation(location.lat, location.lon, animal.name);
     }
-  } else if (animal.coords) {
-    setMapLocation(animal.coords.lat, animal.coords.lon, animal.name);
   }
 
   updateProfile(animalKey);
@@ -644,7 +710,6 @@ function filterAnimals(query) {
 async function initializeProfile() {
   setActiveNavLink();
   renderAnimalList();
-  initAnimalMap();
   initIncidentMap();
   renderIncidentList();
   renderIncidentMarkers();
@@ -652,19 +717,23 @@ async function initializeProfile() {
 
   if (loadZooAnimalsButton) {
     loadZooAnimalsButton.addEventListener('click', async () => {
+      loadZooAnimalsButton.disabled = true;
+      loadZooAnimalsButton.textContent = 'Loading...';
       updateApiStatus('Loading animals from Zoo Animal API...', 'info');
-      try {
-        await loadAnimalsFromApi();
-        renderAnimalList();
-        const firstItem = animalList.querySelector('li');
-        if (firstItem) {
-          setActiveAnimalItem(firstItem);
-          await updateSelectedAnimal(firstItem.dataset.id);
-        }
-      } catch (error) {
-        console.warn('Free animal API load failed:', error);
-        updateApiStatus(`Animal API unavailable: ${error.message}`, 'error');
+
+      const success = await loadAnimalsFromApi();
+      renderAnimalList();
+      const firstItem = animalList.querySelector('li');
+      if (firstItem) {
+        setActiveAnimalItem(firstItem);
+        await updateSelectedAnimal(firstItem.dataset.id);
       }
+
+      if (!success) {
+        updateApiStatus('Free animal API could not be loaded. Showing built-in default profiles.', 'warning');
+      }
+      loadZooAnimalsButton.disabled = false;
+      loadZooAnimalsButton.textContent = 'Load free animal data';
     });
   }
 
@@ -672,7 +741,7 @@ async function initializeProfile() {
   const defaultItem = animalList.querySelector(`li[data-id="${defaultAnimalKey}"]`) || animalList.querySelector('li');
   if (defaultItem) {
     setActiveAnimalItem(defaultItem);
-    updateProfile(defaultItem.dataset.id);
+    await updateSelectedAnimal(defaultItem.dataset.id);
   }
 
   animalList.querySelectorAll('li').forEach(li => {

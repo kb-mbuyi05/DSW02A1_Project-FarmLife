@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FarmLife - Community Reports</title>
   <link rel="stylesheet" href="community.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   <link rel="stylesheet" href="../shared.css">
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
   <script src="community.js" defer></script>
 </head>
 <body>
@@ -35,42 +37,140 @@
         <p class="subtitle">Stay informed with verified theft reports, local recovery updates, and community-driven alerts across the region.</p>
       </div>
       <div class="community-actions">
-        <input type="text" placeholder="Search location or animal type..." class="search-bar">
-        <button class="report-btn" onclick="location.href='../Report-Theft_Page/report.html'">Report Theft Incident</button>
+        <button class="report-btn" id="openFormBtn">New Theft Report</button>
       </div>
-      <div class="community-stats">
-        <span><strong>14</strong> Reports</span>
-        <span><strong>82%</strong> Verified</span>
-        <span><strong>3</strong> Active Searches</span>
+      <div class="community-stats" id="communityStats">
+        <span><strong>0</strong> Reports</span>
+        <span><strong>0%</strong> Verified</span>
+        <span><strong>0</strong> Active Alerts</span>
       </div>
+
+      <div class="alert-banner">
+        <span class="alert-pill">Urgent</span>
+        <p id="alertBannerText">There are no active alerts right now. Your community is up to date.</p>
+      </div>
+
+      <div class="analytics-row">
+        <div class="analytics-card">
+          <strong id="analyticsTotal">0</strong>
+          <span>Total incidents</span>
+        </div>
+        <div class="analytics-card">
+          <strong id="analyticsVerified">0</strong>
+          <span>Verified reports</span>
+        </div>
+        <div class="analytics-card">
+          <strong id="analyticsActive">0</strong>
+          <span>Active alerts</span>
+        </div>
+        <div class="analytics-card">
+          <strong id="analyticsNotes">0</strong>
+          <span>Community notes</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="report-management">
+      <div class="management-header">
+        <div>
+          <h2>Manage Community Reports</h2>
+          <p>Add new incident reports or update the status of existing theft alerts directly from this dashboard.</p>
+        </div>
+      </div>
+      <div class="report-controls">
+        <div class="control-item">
+          <label for="filterStatus">Filter by status</label>
+          <select id="filterStatus">
+            <option value="all">All statuses</option>
+            <option value="Verified">Verified</option>
+            <option value="Pending">Pending</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+        </div>
+        <div class="control-item">
+          <label for="filterAnimal">Filter by animal</label>
+          <input type="text" id="filterAnimal" placeholder="Cattle, Goats, Sheep">
+        </div>
+        <div class="control-item">
+          <label for="sortOrder">Sort by</label>
+          <select id="sortOrder">
+            <option value="recent">Most recent</option>
+            <option value="oldest">Oldest</option>
+            <option value="verified">Verified first</option>
+            <option value="activity">Most active</option>
+          </select>
+        </div>
+        <div class="control-item button-block">
+          <button type="button" id="clearFiltersBtn" class="cancel-btn">Clear filters</button>
+        </div>
+      </div>
+
+      <form id="reportForm" class="report-form hidden">
+        <h3 id="formTitle">Add new report</h3>
+
+        <div class="form-group">
+          <label for="reportTitle">Incident Title</label>
+          <input type="text" id="reportTitle" placeholder="e.g. 12 Cattle Stolen" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="reportReporter">Reporter</label>
+            <input type="text" id="reportReporter" placeholder="Reporter name" required>
+          </div>
+          <div class="form-group half-width">
+            <label for="reportAnimal">Animal Type</label>
+            <input type="text" id="reportAnimal" placeholder="e.g. Cattle, Goats" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reportLocation">Location</label>
+          <input type="text" id="reportLocation" placeholder="Location details" required>
+        </div>
+        <div class="form-group">
+          <label for="reportDescription">Description</label>
+          <textarea id="reportDescription" rows="4" placeholder="Describe the incident..." required></textarea>
+        </div>
+        <div class="form-row">
+          <div class="form-group half-width">
+            <label for="reportStatus">Status</label>
+            <select id="reportStatus" required>
+              <option value="Verified">Verified</option>
+              <option value="Pending">Pending</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+          <div class="form-group half-width">
+            <label for="reportVerifier">Verifier</label>
+            <input type="text" id="reportVerifier" placeholder="Verified by (optional)">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="reportImages">Evidence photos</label>
+          <input type="file" id="reportImages" accept="image/*" multiple>
+          <div id="imagePreviewList" class="image-preview-list"></div>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="save-btn">Save Report</button>
+          <button type="button" class="cancel-btn" id="cancelFormBtn">Cancel</button>
+        </div>
+      </form>
     </section>
 
     <div class="content">
       <aside class="sidebar">
         <div class="sidebar-header">
-          <h2>Recent Incidents</h2>
-          <p>Latest community reports and verified theft alerts.</p>
+          <h2>Incident Reports</h2>
+          <p>Latest community reports and theft alerts you can edit or remove.</p>
         </div>
 
-        <div class="incident-card verified">
-          <h3>Piet Viljoen — 12 Cattle Stolen</h3>
-          <p><strong>Location:</strong> Balfour District, Mpumalanga</p>
-          <p>“Brahman-cross herd taken from North pasture. Fence cut at R23. Blue Toyota Hilux seen in area.”</p>
-          <span>Verified</span>
-        </div>
+        <div id="reportList" class="report-list"></div>
 
-        <div class="incident-card pending">
-          <h3>Sarah Moloi — 45 Sheep Stolen</h3>
-          <p><strong>Location:</strong> Harrismith, Free State</p>
-          <p>“Merino sheep missing after night storm. Tracks heading towards mountain pass.”</p>
-          <span>Pending</span>
-        </div>
-
-        <div class="incident-card resolved">
-          <h3>David Ngwenya — 8 Goats Stolen</h3>
-          <p><strong>Location:</strong> Ladysmith Outskirts, KZN</p>
-          <p>“Small group of Boer goats taken from kraal. Recovered 5km away thanks to community tip.”</p>
-          <span>Resolved</span>
+        <div id="deleteConfirm" class="delete-confirm hidden">
+          <p>Are you sure you want to delete <strong>"<span id="deleteReportTitle"></span>"</strong>? This cannot be undone.</p>
+          <div class="confirm-actions">
+            <button type="button" id="confirmDeleteBtn" class="delete-btn">Delete</button>
+            <button type="button" id="cancelDeleteBtn" class="cancel-btn">Cancel</button>
+          </div>
         </div>
 
         <div class="legend">
@@ -84,10 +184,39 @@
       </aside>
 
       <section class="map-section">
-        <div class="map-placeholder">[Map with Theft Markers]</div>
+        <div id="communityMap" class="map-placeholder"></div>
       </section>
     </div>
   </main>
+
+  <section class="community-resources">
+    <div class="resources-panel">
+      <div class="resource-copy">
+        <h2>Safety resources & community support</h2>
+        <p>Keep your livestock safe with theft prevention tips, local support contacts, and quick response workflows designed for the farming community.</p>
+      </div>
+      <div class="resource-grid">
+        <div class="resource-card">
+          <h3>Theft Prevention</h3>
+          <p>Secure pastures, reinforce fences, install motion lighting, and organize neighborhood patrols for high-risk routes.</p>
+        </div>
+        <div class="resource-card">
+          <h3>How to report</h3>
+          <p>Provide clear location, animal details, images, and any vehicle descriptions to help responders act quickly.</p>
+        </div>
+        <div class="resource-card">
+          <h3>Community tips</h3>
+          <p>Share sightings and evidence notes to build trust and support recovery across nearby farms.</p>
+        </div>
+        <div class="resource-card">
+          <h3>Emergency contacts</h3>
+          <p>Local police, stock theft units, and response teams should be contacted immediately for serious or multiple-animal incidents.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast" class="toast hidden"></div>
 
   <footer>
     <div class="footer-columns">

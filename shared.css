@@ -186,14 +186,18 @@ button,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: none;
-  border-radius: 18px;
-  padding: 14px 24px;
-  background: #2563eb;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   cursor: pointer;
-  font-weight: 700;
-  transition: background 0.2s ease, transform 0.2s ease;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 button:hover,
@@ -201,8 +205,26 @@ button:hover,
 .report-btn:hover,
 .action-btn:hover,
 .delete-btn:hover {
-  background: #1d4ed8;
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  color: white;
+}
+
+.action-btn:focus-visible,
+.delete-btn:focus-visible {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  box-shadow: 0 2px 4px rgba(245, 101, 101, 0.2);
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+  box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
 }
 
 .secondary-btn,

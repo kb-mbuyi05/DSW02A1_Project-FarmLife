@@ -6,6 +6,7 @@
   <title>FarmLife - Login</title>
   <link rel="stylesheet" href="login.css">
   <link rel="stylesheet" href="../shared.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/zxcvbn/4.4.2/zxcvbn.js"></script>
   <script src="login.js" defer></script>
 </head>
 <body>
@@ -52,6 +53,7 @@
 
       <label for="password">Password</label>
       <input type="password" id="password" placeholder="Enter your password" required>
+      <div id="passwordStrength" class="password-strength"></div>
       <p class="password-hint">Password must be at least 8 characters and include uppercase, lowercase, number, and symbol. Admin login requires 10+ characters.</p>
       <label class="show-password"><input type="checkbox" id="showPassword"> Show Password</label>
 

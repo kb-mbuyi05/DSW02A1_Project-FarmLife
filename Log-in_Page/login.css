@@ -202,7 +202,27 @@ input:focus{
   border-color: #2563eb;
   box-shadow: 0 0 0 4px rgba(59,130,246,0.16);
 }
+.password-strength {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  height: 20px;
+}
 
+.password-strength.weak {
+  color: #dc2626;
+}
+
+.password-strength.fair {
+  color: #d97706;
+}
+
+.password-strength.good {
+  color: #059669;
+}
+
+.password-strength.strong {
+  color: #059669;
+}
 button{
   margin-top: 16px;
   padding: 14px 18px;

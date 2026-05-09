@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FarmLife - Dashboard</title>
   <link rel="stylesheet" href="dashboard.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
   <link rel="stylesheet" href="../shared.css">
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js" defer></script>
   <script src="dashboard.js" defer></script>
 </head>
 <body>
@@ -76,12 +78,13 @@
           <span>Tracking:</span>
         </div>
         <div id="map" class="map">
-          <div class="location-grid"></div>
-          <div class="tracker" id="marker">
-            <div class="tracker-shadow"></div>
-            <div class="tracker-body"></div>
-            <div class="tracker-direction" id="trackerDirection"></div>
-            <div class="tracker-label" id="trackerLabel">Milo 18</div>
+          <div class="hologram-overlay" id="hologramOverlay">
+            <div class="hologram-scanline"></div>
+            <div class="hologram-data">
+              <div class="data-point" id="dataPoint1">AI Analysis: Normal Pattern</div>
+              <div class="data-point" id="dataPoint2">Battery Levels: Optimal</div>
+              <div class="data-point" id="dataPoint3">Weather Impact: Minimal</div>
+            </div>
           </div>
         </div>
         <div class="tracker-caption" id="trackerCaption">Heading northeast toward East Range • Speed 14 km/h</div>

@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // EmailJS template must include these variables:
-    // {{to_email}}, {{user_name}}, {{reset_link}}, {{link_expiry}}, {{app_name}}
+    // {{email}} or {{to_email}}, {{user_name}}, {{reset_link}}, {{link_expiry}}, {{app_name}}
     // Example template body in EmailJS:
     // Hello {{user_name}},
     //
@@ -135,12 +135,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Thanks,
     // {{app_name}}
     const templateParams = {
+      email,
       to_email: email,
       user_name: user.name || 'FarmLife User',
       reset_link: resetLink,
       link_expiry: '15 minutes',
-      app_name: 'FarmLife'
+      app_name: 'FarmLife',
+      reply_to: email
     };
+    console.log('EmailJS template params:', templateParams);
 
     window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
       .then(function() {
