@@ -129,7 +129,10 @@ async function fetchZooAnimals() {
       lastError = error;
     }
   }
-// After attempting to fetch from all sources, the function checks if any animals were successfully retrieved. If so, it filters out duplicates based on a unique key derived from the animal's id or name. If no animals were retrieved, it throws the last encountered error or a generic error indicating that the Zoo Animal API is unavailable. This ensures that the application can gracefully handle API failures while still providing feedback on the issue.
+// After attempting to fetch from all sources, the function checks if any animals were successfully retrieved. If so, it filters out duplicates based on a unique key derived from the animal's id or name. If no animals were retrieved, it throws the last encountered error or a generic error indicating that the Zoo Animal API is unavailable. This ensures that the application can gracefully handle API failures while still providing feedback on the issue.git push -u origin testing_brench
+
+
+
   if (animals.length) {
     const seen = new Set();
     return animals.filter(item => {
